@@ -611,7 +611,7 @@
         "securitySchemes": {
             "sanctum": {
                 "type": "http",
-                "description": "Token Laravel Sanctum a envoyer dans le header Authorization: Bearer {token}.",
+                "description": "Saisir uniquement le token brut dans Swagger UI. Le prefixe Bearer est ajoute automatiquement.",
                 "bearerFormat": "Bearer token",
                 "scheme": "bearer"
             }

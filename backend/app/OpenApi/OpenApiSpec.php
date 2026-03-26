@@ -18,7 +18,7 @@ use OpenApi\Attributes as OA;
     type: 'http',
     scheme: 'bearer',
     bearerFormat: 'Bearer token',
-    description: 'Token Laravel Sanctum a envoyer dans le header Authorization: Bearer {token}.'
+    description: 'Saisir uniquement le token brut dans Swagger UI. Le prefixe Bearer est ajoute automatiquement.'
 )]
 #[OA\Tag(
     name: 'Auth',

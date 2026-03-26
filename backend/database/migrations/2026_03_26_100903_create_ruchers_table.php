@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('localisation');
             $table->string('description')->nullable();
-            $tablle->unsignedInteger('nb_emplacements')->default(0);
+            $table->unsignedInteger('nb_emplacements')->default(0);
             $table->timestamps();
         });
     }
