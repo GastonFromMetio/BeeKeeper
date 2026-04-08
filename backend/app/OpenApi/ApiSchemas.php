@@ -33,6 +33,23 @@ use OpenApi\Attributes as OA;
     type: 'object'
 )]
 #[OA\Schema(
+    schema: 'Ruche',
+    required: ['id', 'rucher_id', 'nom', 'statut', 'type_ruche'],
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 1),
+        new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
+        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 01'),
+        new OA\Property(property: 'statut', type: 'string', example: 'active'),
+        new OA\Property(property: 'type_ruche', type: 'string', example: 'Dadant'),
+        new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2024),
+        new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Colonie tres dynamique'),
+        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', nullable: true),
+        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', nullable: true),
+        new OA\Property(property: 'rucher', ref: '#/components/schemas/Rucher', nullable: true),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
     schema: 'RegisterRequest',
     required: ['name', 'email', 'password', 'password_confirmation'],
     properties: [
@@ -75,6 +92,31 @@ use OpenApi\Attributes as OA;
     type: 'object'
 )]
 #[OA\Schema(
+    schema: 'StoreRucheRequest',
+    required: ['rucher_id', 'nom', 'statut', 'type_ruche'],
+    properties: [
+        new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
+        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 01'),
+        new OA\Property(property: 'statut', type: 'string', example: 'active'),
+        new OA\Property(property: 'type_ruche', type: 'string', example: 'Dadant'),
+        new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2024),
+        new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Colonie tres dynamique'),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'UpdateRucheRequest',
+    properties: [
+        new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
+        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 02'),
+        new OA\Property(property: 'statut', type: 'string', example: 'en observation'),
+        new OA\Property(property: 'type_ruche', type: 'string', example: 'Langstroth'),
+        new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2025),
+        new OA\Property(property: 'notes', type: 'string', nullable: true, example: 'Division recente'),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
     schema: 'AuthResponse',
     required: ['message', 'user', 'token'],
     properties: [
@@ -90,6 +132,15 @@ use OpenApi\Attributes as OA;
     properties: [
         new OA\Property(property: 'message', type: 'string', example: 'Rucher cree'),
         new OA\Property(property: 'data', ref: '#/components/schemas/Rucher'),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'RucheWriteResponse',
+    required: ['message', 'data'],
+    properties: [
+        new OA\Property(property: 'message', type: 'string', example: 'Ruche creee'),
+        new OA\Property(property: 'data', ref: '#/components/schemas/Ruche'),
     ],
     type: 'object'
 )]

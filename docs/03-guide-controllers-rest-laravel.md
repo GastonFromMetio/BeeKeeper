@@ -265,7 +265,7 @@ class Rucher extends Model
 }
 ```
 
-## 4.3 Creer `Ruche`
+## 4.3 Creer `Ruche` --ok--
 
 Fichier :
 
@@ -329,8 +329,8 @@ php artisan make:request Auth/LoginRequest --ok--
 php artisan make:request Auth/UpdateProfileRequest
 php artisan make:request Rucher/StoreRucherRequest --ok--
 php artisan make:request Rucher/UpdateRucherRequest --ok--
-php artisan make:request Ruche/StoreRucheRequest
-php artisan make:request Ruche/UpdateRucheRequest
+php artisan make:request Ruche/StoreRucheRequest --ok--
+php artisan make:request Ruche/UpdateRucheRequest --ok--
 ```
 
 Important :
@@ -406,7 +406,7 @@ return [
 ];
 ```
 
-## 6.6 Validation `StoreRucheRequest`
+## 6.6 Validation `StoreRucheRequest` --ok--
 
 ```php
 return [
@@ -419,7 +419,7 @@ return [
 ];
 ```
 
-## 6.7 Validation `UpdateRucheRequest`
+## 6.7 Validation `UpdateRucheRequest` --ok--
 
 ```php
 return [
@@ -652,7 +652,6 @@ public function destroy(Request $request, Rucher $rucher): JsonResponse
 Commande :
 
 ```bash
-php artisan make:controller Api/RucheController --api --model=Ruche
 ```
 
 Ce controller est aussi un CRUD REST complet.

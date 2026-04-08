@@ -141,6 +141,228 @@
                 ]
             }
         },
+        "/api/ruches": {
+            "get": {
+                "tags": [
+                    "Ruches"
+                ],
+                "summary": "Lister les ruches de l utilisateur connecte",
+                "operationId": "listRuches",
+                "responses": {
+                    "200": {
+                        "description": "Liste des ruches",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Ruche"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Ruches"
+                ],
+                "summary": "Creer une ruche",
+                "operationId": "storeRuche",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreRucheRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ruche creee",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RucheWriteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/ruches/{ruche}": {
+            "get": {
+                "tags": [
+                    "Ruches"
+                ],
+                "summary": "Afficher une ruche",
+                "operationId": "showRuche",
+                "parameters": [
+                    {
+                        "name": "ruche",
+                        "in": "path",
+                        "description": "ID de la ruche",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ruche trouvee",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ruche"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie"
+                    },
+                    "403": {
+                        "description": "Acces refuse"
+                    },
+                    "404": {
+                        "description": "Ruche introuvable"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Ruches"
+                ],
+                "summary": "Mettre a jour une ruche",
+                "operationId": "updateRuche",
+                "parameters": [
+                    {
+                        "name": "ruche",
+                        "in": "path",
+                        "description": "ID de la ruche",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRucheRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ruche mise a jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RucheWriteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie"
+                    },
+                    "403": {
+                        "description": "Acces refuse"
+                    },
+                    "404": {
+                        "description": "Ruche introuvable"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Ruches"
+                ],
+                "summary": "Supprimer une ruche",
+                "operationId": "destroyRuche",
+                "parameters": [
+                    {
+                        "name": "ruche",
+                        "in": "path",
+                        "description": "ID de la ruche",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ruche supprimee",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie"
+                    },
+                    "403": {
+                        "description": "Acces refuse"
+                    },
+                    "404": {
+                        "description": "Ruche introuvable"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/ruchers": {
             "get": {
                 "tags": [
@@ -453,6 +675,66 @@
                 },
                 "type": "object"
             },
+            "Ruche": {
+                "required": [
+                    "id",
+                    "rucher_id",
+                    "nom",
+                    "statut",
+                    "type_ruche"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "rucher_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Ruche 01"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "active"
+                    },
+                    "type_ruche": {
+                        "type": "string",
+                        "example": "Dadant"
+                    },
+                    "annee_reine": {
+                        "type": "integer",
+                        "example": 2024,
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Colonie tres dynamique",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "rucher": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Rucher"
+                            }
+                        ],
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "RegisterRequest": {
                 "required": [
                     "name",
@@ -558,6 +840,74 @@
                 },
                 "type": "object"
             },
+            "StoreRucheRequest": {
+                "required": [
+                    "rucher_id",
+                    "nom",
+                    "statut",
+                    "type_ruche"
+                ],
+                "properties": {
+                    "rucher_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Ruche 01"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "active"
+                    },
+                    "type_ruche": {
+                        "type": "string",
+                        "example": "Dadant"
+                    },
+                    "annee_reine": {
+                        "type": "integer",
+                        "example": 2024,
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Colonie tres dynamique",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateRucheRequest": {
+                "properties": {
+                    "rucher_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Ruche 02"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "en observation"
+                    },
+                    "type_ruche": {
+                        "type": "string",
+                        "example": "Langstroth"
+                    },
+                    "annee_reine": {
+                        "type": "integer",
+                        "example": 2025,
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Division recente",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "AuthResponse": {
                 "required": [
                     "message",
@@ -595,6 +945,22 @@
                 },
                 "type": "object"
             },
+            "RucheWriteResponse": {
+                "required": [
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Ruche creee"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Ruche"
+                    }
+                },
+                "type": "object"
+            },
             "MessageResponse": {
                 "required": [
                     "message"
@@ -625,6 +991,10 @@
         {
             "name": "Ruchers",
             "description": "Gestion des ruchers utilisateurs"
+        },
+        {
+            "name": "Ruches",
+            "description": "Gestion des ruches utilisateurs"
         }
     ]
 }

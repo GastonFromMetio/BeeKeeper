@@ -28,6 +28,10 @@ use OpenApi\Attributes as OA;
     name: 'Ruchers',
     description: 'Gestion des ruchers utilisateurs'
 )]
+#[OA\Tag(
+    name: 'Ruches',
+    description: 'Gestion des ruches utilisateurs'
+)]
 final class OpenApiSpec
 {
 }

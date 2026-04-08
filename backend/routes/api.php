@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RucherController;
-// use App\Http\Controllers\Api\RucheController;
+use App\Http\Controllers\Api\RucheController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -23,9 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/ruchers/{rucher}', [RucherController::class, 'update']);
     Route::delete('/ruchers/{rucher}', [RucherController::class, 'destroy']);
 
-    // Route::get('/ruches', [RucheController::class, 'index']);
-    // Route::get('/ruches/{ruche}', [RucheController::class, 'show']);
-    // Route::post('/ruches', [RucheController::class, 'store']);
-    // Route::put('/ruches/{ruche}', [RucheController::class, 'update']);
-    // Route::delete('/ruches/{ruche}', [RucheController::class, 'destroy']);
+    Route::get('/ruches', [RucheController::class, 'index']);
+    Route::get('/ruches/{ruche}', [RucheController::class, 'show']);
+    Route::post('/ruches', [RucheController::class, 'store']);
+    Route::put('/ruches/{ruche}', [RucheController::class, 'update']);
+    Route::delete('/ruches/{ruche}', [RucheController::class, 'destroy']);
 });
