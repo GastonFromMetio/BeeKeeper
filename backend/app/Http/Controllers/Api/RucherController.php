@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Rucher\StoreRucherRequest;
 use App\Http\Requests\Rucher\UpdateRucherRequest;
 use App\Models\Rucher;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\JsonResponse;   
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
