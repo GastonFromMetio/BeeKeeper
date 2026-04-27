@@ -1,0 +1,51 @@
+{
+  "auth": {
+    "kicker": "Authentification BeeKeeper",
+    "heroTitle": "Connecte ton espace apicole sans perdre le fil de la session.",
+    "heroDescription": "Le front dialogue avec l'API Laravel via Sanctum. On garde ici un flux clair: inscription, connexion, restauration de session et deconnexion.",
+    "layoutHint": "Front React branche sur l'API locale",
+    "login": "Connexion",
+    "loggingIn": "Connexion en cours",
+    "logout": "Deconnexion",
+    "register": "Inscription",
+    "creatingAccount": "Creation du compte",
+    "loginTitle": "Se connecter",
+    "loginDescription": "Recupere ton espace BeeKeeper et reprends la main sur ta session.",
+    "registerTitle": "Creer un compte",
+    "registerDescription": "Ouvre une session BeeKeeper et recupere immediatement ton token d'acces.",
+    "email": "Email",
+    "password": "Mot de passe",
+    "passwordConfirmation": "Confirmation du mot de passe",
+    "name": "Nom",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Tu as deja un compte ?",
+    "registerLink": "Creer un compte",
+    "loginLink": "Se connecter",
+    "restoringSession": "Restauration de la session...",
+    "loginSuccess": "Connexion reussie",
+    "registerSuccess": "Compte cree et session ouverte"
+  },
+  "session": {
+    "badge": "Session protegee",
+    "title": "La session front est active et le token Sanctum circule correctement.",
+    "description": "Cet ecran est volontairement minimal: il sert a valider la partie authentification avant de brancher les pages metier.",
+    "secondaryCta": "Voir l'ecran d'inscription",
+    "cardTitle": "Compte courant",
+    "cardDescription": "Donnees renvoyees par /auth/me",
+    "note": "Une fois la partie authentification validee ensemble, on pourra brancher les espaces ruchers et ruches sur la meme base."
+  },
+  "notFound": {
+    "title": "Cette page n'existe pas",
+    "description": "La route demandee ne correspond a aucun ecran actuellement branche dans le frontend.",
+    "backHome": "Retour a la session",
+    "backLogin": "Retour a la connexion"
+  },
+  "errors": {
+    "generic": "Une erreur est survenue"
+  },
+  "validation": {
+    "required": "Ce champ est requis.",
+    "passwordMin": "Le mot de passe doit contenir au moins 8 caracteres.",
+    "passwordMatch": "Les mots de passe doivent correspondre."
+  }
+}
