@@ -24,7 +24,7 @@ export function NotFoundPage() {
             className={buttonVariants({
               size: 'lg',
             })}
-            to={isAuthenticated ? '/' : '/login'}
+            to={isAuthenticated ? '/dashboard' : '/login'}
           >
             {isAuthenticated ? t('notFound.backHome') : t('notFound.backLogin')}
           </Link>

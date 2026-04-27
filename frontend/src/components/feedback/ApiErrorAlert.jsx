@@ -3,8 +3,8 @@ import { TriangleAlert } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useTranslation } from 'react-i18next'
 
-function flattenErrors(errors = {}) {
-  return Object.values(errors).flat().filter(Boolean)
+function flattenErrors(errors) {
+  return Object.values(errors ?? {}).flat().filter(Boolean)
 }
 
 export function ApiErrorAlert({ error }) {

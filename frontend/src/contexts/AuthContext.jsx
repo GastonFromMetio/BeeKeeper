@@ -1,3 +1,4 @@
+/* eslint react-refresh/only-export-components: off */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { ApiError } from '@/services/apiClient'
@@ -76,7 +77,7 @@ export function AuthProvider({ children }) {
         if (isActive) {
           setUser(nextUser)
         }
-      } catch (error) {
+      } catch {
         if (isActive) {
           clearSession()
         }

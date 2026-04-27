@@ -34,11 +34,11 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'Ruche',
-    required: ['id', 'rucher_id', 'nom', 'statut', 'type_ruche'],
+    required: ['id', 'rucher_id', 'name', 'statut', 'type_ruche'],
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
-        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 01'),
+        new OA\Property(property: 'name', type: 'string', example: 'Ruche 01'),
         new OA\Property(property: 'statut', type: 'string', example: 'active'),
         new OA\Property(property: 'type_ruche', type: 'string', example: 'Dadant'),
         new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2024),
@@ -93,10 +93,10 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'StoreRucheRequest',
-    required: ['rucher_id', 'nom', 'statut', 'type_ruche'],
+    required: ['rucher_id', 'name', 'statut', 'type_ruche'],
     properties: [
         new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
-        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 01'),
+        new OA\Property(property: 'name', type: 'string', example: 'Ruche 01'),
         new OA\Property(property: 'statut', type: 'string', example: 'active'),
         new OA\Property(property: 'type_ruche', type: 'string', example: 'Dadant'),
         new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2024),
@@ -108,7 +108,7 @@ use OpenApi\Attributes as OA;
     schema: 'UpdateRucheRequest',
     properties: [
         new OA\Property(property: 'rucher_id', type: 'integer', example: 1),
-        new OA\Property(property: 'nom', type: 'string', example: 'Ruche 02'),
+        new OA\Property(property: 'name', type: 'string', example: 'Ruche 02'),
         new OA\Property(property: 'statut', type: 'string', example: 'en observation'),
         new OA\Property(property: 'type_ruche', type: 'string', example: 'Langstroth'),
         new OA\Property(property: 'annee_reine', type: 'integer', nullable: true, example: 2025),
