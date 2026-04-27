@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { withMinimumLoadingDelay } from '@/lib/loadingDelay'
 import { getRucher } from '@/services/ruchersApi'
 
 export function useRucher(id) {
@@ -18,7 +19,7 @@ export function useRucher(id) {
     try {
       setIsLoading(true)
       setError(null)
-      setRucher(await getRucher(token, id))
+      setRucher(await withMinimumLoadingDelay(() => getRucher(token, id)))
     } catch (apiError) {
       setError(apiError)
     } finally {

@@ -36,7 +36,7 @@ export function RucherDetailPage() {
   }
 
   if (rucherState.isLoading || ruchesState.isLoading) {
-    return <LoadingState label="Chargement du rucher..." />
+    return <LoadingState variant="detail" label="Chargement du rucher..." />
   }
 
   return (

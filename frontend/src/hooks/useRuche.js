@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { withMinimumLoadingDelay } from '@/lib/loadingDelay'
 import { getRuche } from '@/services/ruchesApi'
 
 export function useRuche(id) {
@@ -18,7 +19,7 @@ export function useRuche(id) {
     try {
       setIsLoading(true)
       setError(null)
-      setRuche(await getRuche(token, id))
+      setRuche(await withMinimumLoadingDelay(() => getRuche(token, id)))
     } catch (apiError) {
       setError(apiError)
     } finally {

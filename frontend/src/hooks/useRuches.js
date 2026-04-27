@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { withMinimumLoadingDelay } from '@/lib/loadingDelay'
 import { getRuches } from '@/services/ruchesApi'
 
 export function useRuches(filters = {}) {
@@ -18,7 +19,7 @@ export function useRuches(filters = {}) {
     try {
       setIsLoading(true)
       setError(null)
-      setAllRuches(await getRuches(token))
+      setAllRuches(await withMinimumLoadingDelay(() => getRuches(token)))
     } catch (apiError) {
       setError(apiError)
     } finally {

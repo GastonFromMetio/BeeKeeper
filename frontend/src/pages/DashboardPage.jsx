@@ -9,7 +9,7 @@ export function DashboardPage() {
   const ruchesState = useRuches()
 
   if (ruchersState.isLoading || ruchesState.isLoading) {
-    return <LoadingState label="Chargement du tableau de bord..." />
+    return <LoadingState variant="dashboard" label="Chargement du tableau de bord..." />
   }
 
   return (

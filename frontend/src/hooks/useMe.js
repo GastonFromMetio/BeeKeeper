@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
+import { withMinimumLoadingDelay } from '@/lib/loadingDelay'
 import { getMe } from '@/services/authApi'
 
 export function useMe(token, options = {}) {
@@ -19,7 +20,7 @@ export function useMe(token, options = {}) {
     try {
       setIsLoading(true)
       setError(null)
-      const response = await getMe(token)
+      const response = await withMinimumLoadingDelay(() => getMe(token))
       setUser(response)
       return response
     } catch (nextError) {

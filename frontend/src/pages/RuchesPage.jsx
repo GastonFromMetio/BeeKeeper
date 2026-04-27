@@ -32,7 +32,7 @@ export function RuchesPage() {
   }
 
   if (ruchersState.isLoading || ruchesState.isLoading) {
-    return <LoadingState label="Chargement des ruches..." />
+    return <LoadingState variant="table" columns={6} label="Chargement des ruches..." />
   }
 
   return (

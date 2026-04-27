@@ -28,7 +28,7 @@ export function RuchersPage() {
     }
   }
 
-  if (isLoading) return <LoadingState label="Chargement des ruchers..." />
+  if (isLoading) return <LoadingState variant="table" columns={4} label="Chargement des ruchers..." />
 
   return (
     <div className="space-y-6">
