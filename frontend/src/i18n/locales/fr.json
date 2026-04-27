@@ -1,4 +1,15 @@
 {
+  "app": {
+    "name": "BeeKeeper",
+    "subtitle": "Gestion des ruchers et ruches"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "ruchers": "Ruchers",
+    "ruches": "Ruches",
+    "settings": "Parametres",
+    "openMenu": "Ouvrir la navigation"
+  },
   "auth": {
     "kicker": "Authentification BeeKeeper",
     "heroTitle": "Connecte ton espace apicole sans perdre le fil de la session.",
@@ -37,8 +48,14 @@
   "notFound": {
     "title": "Cette page n'existe pas",
     "description": "La route demandee ne correspond a aucun ecran actuellement branche dans le frontend.",
-    "backHome": "Retour a la session",
+    "backHome": "Retour au tableau de bord",
     "backLogin": "Retour a la connexion"
+  },
+  "settings": {
+    "title": "Parametres",
+    "description": "Compte, langue et session.",
+    "account": "Compte",
+    "language": "Langue"
   },
   "errors": {
     "generic": "Une erreur est survenue"

@@ -11,7 +11,7 @@ export function LoginPage() {
   const location = useLocation()
 
   if (!isLoading && isAuthenticated) {
-    return <Navigate to={location.state?.from?.pathname ?? '/'} replace />
+    return <Navigate to={location.state?.from?.pathname ?? '/dashboard'} replace />
   }
 
   return (

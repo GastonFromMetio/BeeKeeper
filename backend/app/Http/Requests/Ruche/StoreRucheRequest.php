@@ -24,7 +24,7 @@ class StoreRucheRequest extends FormRequest
     {
         return [
             'rucher_id' => ['required', 'exists:ruchers,id'],
-            'nom' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'statut' => ['required', 'string', 'max:255'],
             'type_ruche' => ['required', 'string', 'max:255'],
             'annee_reine' => ['nullable', 'integer', 'min:2000'],

@@ -84,7 +84,7 @@ export function RegisterForm() {
       setIsSubmitting(true)
       await register(values)
       toast.success(t('auth.registerSuccess'))
-      navigate('/', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (error) {
       setSubmitError(error)
     } finally {

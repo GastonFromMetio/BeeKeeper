@@ -679,7 +679,7 @@
                 "required": [
                     "id",
                     "rucher_id",
-                    "nom",
+                    "name",
                     "statut",
                     "type_ruche"
                 ],
@@ -692,7 +692,7 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "nom": {
+                    "name": {
                         "type": "string",
                         "example": "Ruche 01"
                     },
@@ -843,7 +843,7 @@
             "StoreRucheRequest": {
                 "required": [
                     "rucher_id",
-                    "nom",
+                    "name",
                     "statut",
                     "type_ruche"
                 ],
@@ -852,7 +852,7 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "nom": {
+                    "name": {
                         "type": "string",
                         "example": "Ruche 01"
                     },
@@ -883,7 +883,7 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "nom": {
+                    "name": {
                         "type": "string",
                         "example": "Ruche 02"
                     },

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ruches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rucher_id')->constrained()->cascadeOnDelete();
-            $table->string('nom');
+            $table->string('name');
             $table->string('statut');
             $table->string('type_ruche');
             $table->unsignedInteger('annee_reine')->nullable();

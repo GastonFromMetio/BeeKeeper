@@ -1,4 +1,15 @@
 {
+  "app": {
+    "name": "BeeKeeper",
+    "subtitle": "Apiaries and hives management"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "ruchers": "Apiaries",
+    "ruches": "Hives",
+    "settings": "Settings",
+    "openMenu": "Open navigation"
+  },
   "auth": {
     "kicker": "BeeKeeper authentication",
     "heroTitle": "Sign in to your beekeeping workspace without losing the thread of your session.",
@@ -37,8 +48,14 @@
   "notFound": {
     "title": "This page does not exist",
     "description": "The requested route is not mapped to any screen currently wired into the frontend.",
-    "backHome": "Back to session",
+    "backHome": "Back to dashboard",
     "backLogin": "Back to sign in"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Account, language, and session.",
+    "account": "Account",
+    "language": "Language"
   },
   "errors": {
     "generic": "Something went wrong"

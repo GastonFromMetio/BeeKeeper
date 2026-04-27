@@ -10,7 +10,7 @@ export function RegisterPage() {
   const { t } = useTranslation()
 
   if (!isLoading && isAuthenticated) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/dashboard" replace />
   }
 
   return (

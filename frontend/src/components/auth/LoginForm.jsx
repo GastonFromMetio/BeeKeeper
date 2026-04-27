@@ -63,7 +63,7 @@ export function LoginForm() {
       setIsSubmitting(true)
       await login(values)
       toast.success(t('auth.loginSuccess'))
-      navigate(location.state?.from?.pathname ?? '/', { replace: true })
+      navigate(location.state?.from?.pathname ?? '/dashboard', { replace: true })
     } catch (error) {
       setSubmitError(error)
     } finally {
