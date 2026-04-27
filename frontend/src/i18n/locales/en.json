@@ -1,0 +1,51 @@
+{
+  "auth": {
+    "kicker": "BeeKeeper authentication",
+    "heroTitle": "Sign in to your beekeeping workspace without losing the thread of your session.",
+    "heroDescription": "The frontend talks to the Laravel API through Sanctum. This flow stays focused: sign up, sign in, restore session, and sign out.",
+    "layoutHint": "React frontend connected to the local API",
+    "login": "Sign in",
+    "loggingIn": "Signing in",
+    "logout": "Sign out",
+    "register": "Create account",
+    "creatingAccount": "Creating account",
+    "loginTitle": "Sign in",
+    "loginDescription": "Get back into BeeKeeper and restore your working session.",
+    "registerTitle": "Create your account",
+    "registerDescription": "Open a BeeKeeper session and receive your access token right away.",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirmation": "Confirm password",
+    "name": "Name",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Create one",
+    "loginLink": "Sign in",
+    "restoringSession": "Restoring session...",
+    "loginSuccess": "Signed in successfully",
+    "registerSuccess": "Account created and session opened"
+  },
+  "session": {
+    "badge": "Protected session",
+    "title": "The frontend session is active and the Sanctum token is flowing correctly.",
+    "description": "This page stays intentionally minimal so we can validate authentication before wiring the business screens.",
+    "secondaryCta": "Open the sign-up screen",
+    "cardTitle": "Current account",
+    "cardDescription": "Data returned by /auth/me",
+    "note": "Once authentication looks good, we can plug ruchers and ruches pages onto the same foundation."
+  },
+  "notFound": {
+    "title": "This page does not exist",
+    "description": "The requested route is not mapped to any screen currently wired into the frontend.",
+    "backHome": "Back to session",
+    "backLogin": "Back to sign in"
+  },
+  "errors": {
+    "generic": "Something went wrong"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "passwordMin": "Password must contain at least 8 characters.",
+    "passwordMatch": "Passwords must match."
+  }
+}
