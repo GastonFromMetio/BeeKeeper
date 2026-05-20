@@ -19,12 +19,14 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'Rucher',
-    required: ['id', 'user_id', 'name', 'localisation', 'nb_emplacements'],
+    required: ['id', 'user_id', 'name', 'localisation', 'latitude', 'longitude', 'nb_emplacements'],
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'user_id', type: 'integer', example: 1),
         new OA\Property(property: 'name', type: 'string', example: 'Rucher des Tilleuls'),
         new OA\Property(property: 'localisation', type: 'string', example: 'Lyon'),
+        new OA\Property(property: 'latitude', type: 'number', format: 'float', minimum: -90, maximum: 90, nullable: true, example: 45.764043),
+        new OA\Property(property: 'longitude', type: 'number', format: 'float', minimum: -180, maximum: 180, nullable: true, example: 4.835659),
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Rucher principal'),
         new OA\Property(property: 'nb_emplacements', type: 'integer', minimum: 0, example: 12),
         new OA\Property(property: 'created_at', type: 'string', format: 'date-time', nullable: true),
@@ -71,10 +73,12 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'StoreRucherRequest',
-    required: ['name', 'localisation', 'nb_emplacements'],
+    required: ['name', 'localisation', 'latitude', 'longitude', 'nb_emplacements'],
     properties: [
         new OA\Property(property: 'name', type: 'string', example: 'Rucher des Tilleuls'),
         new OA\Property(property: 'localisation', type: 'string', example: 'Lyon'),
+        new OA\Property(property: 'latitude', type: 'number', format: 'float', minimum: -90, maximum: 90, example: 45.764043),
+        new OA\Property(property: 'longitude', type: 'number', format: 'float', minimum: -180, maximum: 180, example: 4.835659),
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Rucher principal'),
         new OA\Property(property: 'nb_emplacements', type: 'integer', minimum: 0, example: 12),
     ],
@@ -82,10 +86,12 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'UpdateRucherRequest',
-    required: ['name', 'localisation', 'nb_emplacements'],
+    required: ['name', 'localisation', 'latitude', 'longitude', 'nb_emplacements'],
     properties: [
         new OA\Property(property: 'name', type: 'string', example: 'Rucher du Verger'),
         new OA\Property(property: 'localisation', type: 'string', example: 'Grenoble'),
+        new OA\Property(property: 'latitude', type: 'number', format: 'float', minimum: -90, maximum: 90, example: 45.188529),
+        new OA\Property(property: 'longitude', type: 'number', format: 'float', minimum: -180, maximum: 180, example: 5.724524),
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Mise a jour du rucher'),
         new OA\Property(property: 'nb_emplacements', type: 'integer', minimum: 0, example: 16),
     ],

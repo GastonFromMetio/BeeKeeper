@@ -45,7 +45,7 @@ export function RucherDialog({
           {triggerLabel}
         </DialogTrigger>
       )}
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Modifier le rucher' : 'Créer un rucher'}</DialogTitle>
         </DialogHeader>

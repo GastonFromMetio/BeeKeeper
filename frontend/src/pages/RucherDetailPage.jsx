@@ -4,10 +4,12 @@ import { Link, useParams } from 'react-router'
 import { buttonVariants } from '@/components/ui/button'
 import { ApiErrorAlert } from '@/components/feedback/ApiErrorAlert'
 import { LoadingState } from '@/components/feedback/LoadingState'
+import { RucherLocationMap } from '@/components/map/RucherLocationMap'
 import { RucheDialog } from '@/components/ruches/RucheDialog'
 import { RucheTable } from '@/components/ruches/RucheTable'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRucher } from '@/hooks/useRucher'
+import { formatCoordinate, getRucherPosition } from '@/hooks/useRucherLocation'
 import { useRuchers } from '@/hooks/useRuchers'
 import { useRuches } from '@/hooks/useRuches'
 import { deleteRuche } from '@/services/ruchesApi'
@@ -20,6 +22,7 @@ export function RucherDetailPage() {
   const rucherState = useRucher(rucherId)
   const ruchersState = useRuchers()
   const ruchesState = useRuches({ rucherId })
+  const rucherPosition = getRucherPosition(rucherState.rucher)
 
   async function handleDelete(ruche) {
     const rucheName = ruche.name ?? ruche.nom
@@ -46,13 +49,23 @@ export function RucherDetailPage() {
       </Link>
       <ApiErrorAlert error={rucherState.error || ruchesState.error || ruchersState.error || mutationError} />
       {rucherState.rucher && (
-        <section className="rounded-lg border p-4">
-          <h1 className="text-2xl font-semibold">{rucherState.rucher.name}</h1>
-          <p className="text-sm text-muted-foreground">{rucherState.rucher.localisation}</p>
-          {rucherState.rucher.description && <p className="mt-3 text-sm">{rucherState.rucher.description}</p>}
-          <p className="mt-3 text-sm text-muted-foreground">
-            {rucherState.rucher.nb_emplacements} emplacements
-          </p>
+        <section className="grid gap-4 rounded-lg border p-4 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,28rem)]">
+          <div>
+            <h1 className="text-2xl font-semibold">{rucherState.rucher.name}</h1>
+            <p className="text-sm text-muted-foreground">{rucherState.rucher.localisation}</p>
+            {rucherPosition && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                {formatCoordinate(rucherPosition.lat)}, {formatCoordinate(rucherPosition.lng)}
+              </p>
+            )}
+            {rucherState.rucher.description && <p className="mt-3 text-sm">{rucherState.rucher.description}</p>}
+            <p className="mt-3 text-sm text-muted-foreground">
+              {rucherState.rucher.nb_emplacements} emplacements
+            </p>
+          </div>
+          {rucherPosition && (
+            <RucherLocationMap className="h-72" disabled position={rucherPosition} />
+          )}
         </section>
       )}
       <section className="space-y-3">

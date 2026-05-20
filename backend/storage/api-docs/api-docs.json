@@ -633,6 +633,8 @@
                     "user_id",
                     "name",
                     "localisation",
+                    "latitude",
+                    "longitude",
                     "nb_emplacements"
                 ],
                 "properties": {
@@ -651,6 +653,22 @@
                     "localisation": {
                         "type": "string",
                         "example": "Lyon"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 45.764043,
+                        "nullable": true,
+                        "maximum": 90,
+                        "minimum": -90
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 4.835659,
+                        "nullable": true,
+                        "maximum": 180,
+                        "minimum": -180
                     },
                     "description": {
                         "type": "string",
@@ -788,6 +806,8 @@
                 "required": [
                     "name",
                     "localisation",
+                    "latitude",
+                    "longitude",
                     "nb_emplacements"
                 ],
                 "properties": {
@@ -798,6 +818,20 @@
                     "localisation": {
                         "type": "string",
                         "example": "Lyon"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 45.764043,
+                        "maximum": 90,
+                        "minimum": -90
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 4.835659,
+                        "maximum": 180,
+                        "minimum": -180
                     },
                     "description": {
                         "type": "string",
@@ -816,6 +850,8 @@
                 "required": [
                     "name",
                     "localisation",
+                    "latitude",
+                    "longitude",
                     "nb_emplacements"
                 ],
                 "properties": {
@@ -826,6 +862,20 @@
                     "localisation": {
                         "type": "string",
                         "example": "Grenoble"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 45.188529,
+                        "maximum": 90,
+                        "minimum": -90
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 5.724524,
+                        "maximum": 180,
+                        "minimum": -180
                     },
                     "description": {
                         "type": "string",
