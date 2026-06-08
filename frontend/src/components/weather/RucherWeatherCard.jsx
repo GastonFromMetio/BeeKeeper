@@ -37,7 +37,7 @@ function formatCoordinates(latitude, longitude) {
   return `${formatCoordinate(latitude)}, ${formatCoordinate(longitude)}`
 }
 
-export function RucherWeatherCard({ report, isLoading = false }) {
+export function RucherWeatherCard({ report, isLoading = false, action = null }) {
   const { t } = useTranslation()
 
   if (isLoading && !report) {
@@ -52,9 +52,12 @@ export function RucherWeatherCard({ report, isLoading = false }) {
               </CardTitle>
               <CardDescription>{t('weather.detailsDescription')}</CardDescription>
             </div>
-            <Badge variant="outline" className={cn(isLoading && 'border-primary/30 text-primary')}>
-              {t('weather.source')}
-            </Badge>
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Badge variant="outline" className={cn(isLoading && 'border-primary/30 text-primary')}>
+                {t('weather.source')}
+              </Badge>
+              {action}
+            </div>
           </div>
         </CardHeader>
         <CardContent className="rounded-xl border border-dashed border-border/80 bg-muted/20 p-4">
@@ -82,7 +85,10 @@ export function RucherWeatherCard({ report, isLoading = false }) {
               </CardTitle>
               <CardDescription>{t('weather.detailsDescription')}</CardDescription>
             </div>
-            <Badge variant="outline">{t('weather.source')}</Badge>
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Badge variant="outline">{t('weather.source')}</Badge>
+              {action}
+            </div>
           </div>
         </CardHeader>
         <CardContent className="rounded-xl border border-dashed border-border/80 bg-muted/20 p-4">
@@ -106,7 +112,10 @@ export function RucherWeatherCard({ report, isLoading = false }) {
             </CardTitle>
             <CardDescription>{t('weather.detailsDescription')}</CardDescription>
           </div>
-          <Badge variant="outline">{t('weather.source')}</Badge>
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <Badge variant="outline">{t('weather.source')}</Badge>
+            {action}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">

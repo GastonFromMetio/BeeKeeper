@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RucherController;
 use App\Http\Controllers\Api\RucheController;
+use App\Http\Controllers\Api\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -22,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/ruchers', [RucherController::class, 'store']);
     Route::put('/ruchers/{rucher}', [RucherController::class, 'update']);
     Route::delete('/ruchers/{rucher}', [RucherController::class, 'destroy']);
+    Route::get('/ruchers/{rucher}/weather', [WeatherController::class, 'index']);
+    Route::post('/ruchers/{rucher}/weather', [WeatherController::class, 'store']);
 
     Route::get('/ruches', [RucheController::class, 'index']);
     Route::get('/ruches/{ruche}', [RucheController::class, 'show']);

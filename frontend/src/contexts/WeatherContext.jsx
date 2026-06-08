@@ -2,30 +2,9 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 
 import { useAuth } from '@/contexts/AuthContext'
 import { getRucherPosition } from '@/hooks/useRucherLocation'
-import { getCurrentWeather, WeatherApiError } from '@/services/weatherApi'
+import { fetchRucherWeather, normalizeWeatherReport, WeatherApiError } from '@/services/weatherApi'
 
 const WeatherContext = createContext(null)
-
-function buildWeatherReport(rucher, position, data) {
-  const current = data?.current ?? {}
-  const currentUnits = data?.current_units ?? {}
-
-  return {
-    rucherId: rucher.id,
-    rucherName: rucher.name,
-    latitude: position.lat,
-    longitude: position.lng,
-    temperature: current.temperature_2m,
-    apparentTemperature: current.apparent_temperature ?? null,
-    windSpeed: current.wind_speed_10m ?? null,
-    humidity: current.relative_humidity_2m ?? null,
-    temperatureUnit: currentUnits.temperature_2m ?? '°C',
-    apparentTemperatureUnit: currentUnits.apparent_temperature ?? currentUnits.temperature_2m ?? '°C',
-    windSpeedUnit: currentUnits.wind_speed_10m ?? 'km/h',
-    humidityUnit: currentUnits.relative_humidity_2m ?? '%',
-    fetchedAt: new Date().toISOString(),
-  }
-}
 
 export function WeatherProvider({ children }) {
   const { token } = useAuth()
@@ -51,15 +30,47 @@ export function WeatherProvider({ children }) {
     return weatherByRucherIdRef.current[rucherId] ?? null
   }, [])
 
-  const fetchWeatherForRucher = useCallback(async (rucher) => {
+  const mergeReports = useCallback((reportsToMerge) => {
+    const normalizedReports = reportsToMerge
+      .map((report) => normalizeWeatherReport(report))
+      .filter((report) => report?.rucherId)
+
+    if (normalizedReports.length === 0) {
+      return
+    }
+
+    setWeatherByRucherId((currentReports) => {
+      const nextReports = { ...currentReports }
+
+      for (const report of normalizedReports) {
+        nextReports[report.rucherId] = report
+      }
+
+      const orderedReports = Object.values(nextReports)
+        .sort((left, right) => new Date(right.fetchedAt) - new Date(left.fetchedAt))
+
+      return Object.fromEntries(orderedReports.map((item) => [item.rucherId, item]))
+    })
+  }, [])
+
+  const primeWeatherReportsFromRuchers = useCallback((ruchers = []) => {
+    mergeReports(
+      ruchers
+        .map((rucher) => normalizeWeatherReport(rucher.latest_weather_report, rucher))
+        .filter(Boolean),
+    )
+  }, [mergeReports])
+
+  const fetchWeatherForRucher = useCallback(async (rucher, options = {}) => {
     const position = getRucherPosition(rucher)
+    const { force = false } = options
 
     if (!position) {
       throw new WeatherApiError('Les coordonnees du rucher sont manquantes.')
     }
 
     const cachedReport = weatherByRucherIdRef.current[rucher.id] ?? null
-    if (cachedReport) {
+    if (cachedReport && !force) {
       return cachedReport
     }
 
@@ -71,27 +82,14 @@ export function WeatherProvider({ children }) {
     pendingRucherIdRef.current = rucher.id
 
     try {
-      const data = await getCurrentWeather(position.lat, position.lng)
-      const report = buildWeatherReport(rucher, position, data)
-
-      setWeatherByRucherId((currentReports) => {
-        const nextReports = {
-          ...currentReports,
-          [report.rucherId]: report,
-        }
-
-        const orderedReports = Object.values(nextReports)
-          .sort((left, right) => new Date(right.fetchedAt) - new Date(left.fetchedAt))
-
-        return Object.fromEntries(orderedReports.map((item) => [item.rucherId, item]))
-      })
-
+      const report = await fetchRucherWeather(token, rucher.id)
+      mergeReports([report])
       return report
     } finally {
       setPendingRucherId(null)
       pendingRucherIdRef.current = null
     }
-  }, [])
+  }, [mergeReports, token])
 
   const reports = useMemo(() => (
     Object.values(weatherByRucherId)
@@ -106,7 +104,15 @@ export function WeatherProvider({ children }) {
     isFetching: pendingRucherId !== null,
     getWeatherReport,
     fetchWeatherForRucher,
-  }), [fetchWeatherForRucher, getWeatherReport, pendingRucherId, reports, weatherByRucherId])
+    primeWeatherReportsFromRuchers,
+  }), [
+    fetchWeatherForRucher,
+    getWeatherReport,
+    pendingRucherId,
+    primeWeatherReportsFromRuchers,
+    reports,
+    weatherByRucherId,
+  ])
 
   return <WeatherContext.Provider value={value}>{children}</WeatherContext.Provider>
 }

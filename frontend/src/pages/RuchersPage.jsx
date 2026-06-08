@@ -7,48 +7,38 @@ import { RucherDialog } from '@/components/ruchers/RucherDialog'
 import { RucherTable } from '@/components/ruchers/RucherTable'
 import { useAuth } from '@/contexts/AuthContext'
 import { useWeather } from '@/contexts/WeatherContext'
-import { getRucherPosition } from '@/hooks/useRucherLocation'
 import { useRuchers } from '@/hooks/useRuchers'
 import { deleteRucher } from '@/services/ruchersApi'
+import { useTranslation } from 'react-i18next'
+
+function formatTemperature(value, unit = '°C') {
+  if (!Number.isFinite(Number(value))) {
+    return '—'
+  }
+
+  const formatter = new Intl.NumberFormat(undefined, {
+    maximumFractionDigits: 1,
+  })
+
+  return `${formatter.format(Number(value))} ${unit}`
+}
 
 export function RuchersPage() {
   const { token } = useAuth()
+  const { t } = useTranslation()
   const { ruchers, isLoading, error, refetch } = useRuchers()
-  const { fetchWeatherForRucher, getWeatherReport, weatherByRucherId, pendingRucherId } = useWeather()
+  const {
+    fetchWeatherForRucher,
+    pendingRucherId,
+    primeWeatherReportsFromRuchers,
+    weatherByRucherId,
+  } = useWeather()
   const [editingRucher, setEditingRucher] = useState(null)
   const [mutationError, setMutationError] = useState(null)
 
   useEffect(() => {
-    let cancelled = false
-
-    async function loadWeather() {
-      for (const rucher of ruchers) {
-        if (cancelled) {
-          return
-        }
-
-        if (getWeatherReport(rucher.id)) {
-          continue
-        }
-
-        if (!getRucherPosition(rucher)) {
-          continue
-        }
-
-        try {
-          await fetchWeatherForRucher(rucher)
-        } catch {
-          // Weather is additive. Keep the list usable even if Open-Meteo fails.
-        }
-      }
-    }
-
-    loadWeather()
-
-    return () => {
-      cancelled = true
-    }
-  }, [fetchWeatherForRucher, getWeatherReport, ruchers])
+    primeWeatherReportsFromRuchers(ruchers)
+  }, [primeWeatherReportsFromRuchers, ruchers])
 
   async function handleDelete(rucher) {
     if (!window.confirm(`Supprimer ${rucher.name} ?`)) return
@@ -59,6 +49,20 @@ export function RuchersPage() {
       toast.success('Rucher supprimé')
       await refetch()
     } catch (apiError) {
+      setMutationError(apiError)
+    }
+  }
+
+  async function handleFetchWeather(rucher) {
+    try {
+      setMutationError(null)
+      const report = await fetchWeatherForRucher(rucher, { force: true })
+      toast.success(t('weather.success', {
+        name: rucher.name,
+        temperature: formatTemperature(report.temperature, report.temperatureUnit),
+      }))
+    } catch (apiError) {
+      toast.error(t('weather.apiError'))
       setMutationError(apiError)
     }
   }
@@ -82,6 +86,7 @@ export function RuchersPage() {
           ruchers={ruchers}
           onEdit={setEditingRucher}
           onDelete={handleDelete}
+          onWeather={handleFetchWeather}
           weatherReportsByRucherId={weatherByRucherId}
           loadingRucherId={pendingRucherId}
         />

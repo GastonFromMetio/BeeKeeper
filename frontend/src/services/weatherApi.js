@@ -1,5 +1,4 @@
-const DEFAULT_WEATHER_API_URL =
-  import.meta.env.VITE_WEATHER_API_URL ?? 'https://api.open-meteo.com/v1/forecast'
+import { apiRequest } from '@/services/apiClient'
 
 export class WeatherApiError extends Error {
   constructor(message) {
@@ -8,40 +7,42 @@ export class WeatherApiError extends Error {
   }
 }
 
-function buildWeatherUrl(latitude, longitude) {
-  const url = new URL(DEFAULT_WEATHER_API_URL)
+export function normalizeWeatherReport(report, fallbackRucher = null) {
+  if (!report) {
+    return null
+  }
 
-  url.searchParams.set('latitude', String(latitude))
-  url.searchParams.set('longitude', String(longitude))
-  url.searchParams.set(
-    'current',
-    'temperature_2m,apparent_temperature,wind_speed_10m,relative_humidity_2m',
-  )
-  url.searchParams.set('timezone', 'auto')
-
-  return url
+  return {
+    id: report.id,
+    rucherId: report.rucherId ?? report.rucher_id ?? fallbackRucher?.id,
+    rucherName: report.rucherName ?? report.rucher_name ?? fallbackRucher?.name,
+    latitude: report.latitude,
+    longitude: report.longitude,
+    temperature: report.temperature,
+    apparentTemperature: report.apparentTemperature ?? report.apparent_temperature,
+    windSpeed: report.windSpeed ?? report.wind_speed,
+    humidity: report.humidity,
+    temperatureUnit: report.temperatureUnit ?? report.temperature_unit ?? '°C',
+    apparentTemperatureUnit:
+      report.apparentTemperatureUnit ?? report.apparent_temperature_unit ?? report.temperature_unit ?? '°C',
+    windSpeedUnit: report.windSpeedUnit ?? report.wind_speed_unit ?? 'km/h',
+    humidityUnit: report.humidityUnit ?? report.humidity_unit ?? '%',
+    source: report.source ?? 'Open-Meteo',
+    fetchedAt: report.fetchedAt ?? report.fetched_at ?? fallbackRucher?.last_weather_checked_at,
+  }
 }
 
-export async function getCurrentWeather(latitude, longitude) {
-  let response
+export async function fetchRucherWeather(token, rucherId) {
+  const report = await apiRequest(`/ruchers/${rucherId}/weather`, {
+    method: 'POST',
+    token,
+  })
 
-  try {
-    response = await fetch(buildWeatherUrl(latitude, longitude))
-  } catch {
-    throw new WeatherApiError('Unable to contact the weather service.')
-  }
+  return normalizeWeatherReport(report)
+}
 
-  let data = null
+export async function getRucherWeatherHistory(token, rucherId) {
+  const reports = await apiRequest(`/ruchers/${rucherId}/weather`, { token })
 
-  try {
-    data = await response.json()
-  } catch {
-    data = null
-  }
-
-  if (!response.ok) {
-    throw new WeatherApiError(data?.reason || 'Weather data is unavailable for this apiary.')
-  }
-
-  return data
+  return reports.map((report) => normalizeWeatherReport(report))
 }

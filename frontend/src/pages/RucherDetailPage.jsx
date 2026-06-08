@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Link, useParams } from 'react-router'
-import { buttonVariants } from '@/components/ui/button'
+import { CloudSun } from 'lucide-react'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { ApiErrorAlert } from '@/components/feedback/ApiErrorAlert'
 import { LoadingState } from '@/components/feedback/LoadingState'
 import { RucherLocationMap } from '@/components/map/RucherLocationMap'
@@ -15,32 +16,43 @@ import { formatCoordinate, getRucherPosition } from '@/hooks/useRucherLocation'
 import { useRuchers } from '@/hooks/useRuchers'
 import { useRuches } from '@/hooks/useRuches'
 import { deleteRuche } from '@/services/ruchesApi'
+import { useTranslation } from 'react-i18next'
+
+function formatTemperature(value, unit = '°C') {
+  if (!Number.isFinite(Number(value))) {
+    return '—'
+  }
+
+  const formatter = new Intl.NumberFormat(undefined, {
+    maximumFractionDigits: 1,
+  })
+
+  return `${formatter.format(Number(value))} ${unit}`
+}
 
 export function RucherDetailPage() {
   const { rucherId } = useParams()
   const { token } = useAuth()
-  const { fetchWeatherForRucher, getWeatherReport, pendingRucherId } = useWeather()
+  const { t } = useTranslation()
+  const {
+    fetchWeatherForRucher,
+    pendingRucherId,
+    primeWeatherReportsFromRuchers,
+    weatherByRucherId,
+  } = useWeather()
   const [editingRuche, setEditingRuche] = useState(null)
   const [mutationError, setMutationError] = useState(null)
   const rucherState = useRucher(rucherId)
   const ruchersState = useRuchers()
   const ruchesState = useRuches({ rucherId })
   const rucherPosition = getRucherPosition(rucherState.rucher)
-  const weatherReport = rucherState.rucher ? getWeatherReport(rucherState.rucher.id) : null
+  const weatherReport = rucherState.rucher ? weatherByRucherId[rucherState.rucher.id] ?? null : null
 
   useEffect(() => {
-    if (!rucherState.rucher) {
-      return
+    if (rucherState.rucher) {
+      primeWeatherReportsFromRuchers([rucherState.rucher])
     }
-
-    if (weatherReport || !rucherPosition) {
-      return
-    }
-
-    void fetchWeatherForRucher(rucherState.rucher).catch(() => {
-      // On garde la fiche accessible même si le service météo est indisponible.
-    })
-  }, [fetchWeatherForRucher, rucherPosition, rucherState.rucher, weatherReport])
+  }, [primeWeatherReportsFromRuchers, rucherState.rucher])
 
   async function handleDelete(ruche) {
     const rucheName = ruche.name ?? ruche.nom
@@ -52,6 +64,24 @@ export function RucherDetailPage() {
       toast.success('Ruche supprimée')
       await ruchesState.refetch()
     } catch (apiError) {
+      setMutationError(apiError)
+    }
+  }
+
+  async function handleFetchWeather() {
+    if (!rucherState.rucher) {
+      return
+    }
+
+    try {
+      setMutationError(null)
+      const report = await fetchWeatherForRucher(rucherState.rucher, { force: true })
+      toast.success(t('weather.success', {
+        name: rucherState.rucher.name,
+        temperature: formatTemperature(report.temperature, report.temperatureUnit),
+      }))
+    } catch (apiError) {
+      toast.error(t('weather.apiError'))
       setMutationError(apiError)
     }
   }
@@ -88,6 +118,16 @@ export function RucherDetailPage() {
           <RucherWeatherCard
             report={weatherReport}
             isLoading={pendingRucherId === rucherState.rucher.id && !weatherReport}
+            action={
+              <Button
+                variant="outline"
+                onClick={handleFetchWeather}
+                disabled={!rucherPosition || pendingRucherId === rucherState.rucher.id}
+              >
+                <CloudSun className="size-4" />
+                {t('weather.buttonLabel')}
+              </Button>
+            }
           />
         </>
       )}

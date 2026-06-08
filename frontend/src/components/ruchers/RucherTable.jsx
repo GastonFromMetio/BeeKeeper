@@ -1,4 +1,4 @@
-import { Eye, MapPin, Pencil, ThermometerSun, Trash2 } from 'lucide-react'
+import { CloudSun, Eye, MapPin, Pencil, ThermometerSun, Trash2 } from 'lucide-react'
 import { Link } from 'react-router'
 import { buttonVariants } from '@/components/ui/button'
 import { Button } from '@/components/ui/button'
@@ -22,6 +22,7 @@ export function RucherTable({
   ruchers,
   onEdit,
   onDelete,
+  onWeather,
   weatherReportsByRucherId = {},
   loadingRucherId = null,
 }) {
@@ -34,9 +35,9 @@ export function RucherTable({
           <TableRow>
             <TableHead>Nom</TableHead>
             <TableHead>Coordonnées</TableHead>
-            <TableHead>{t('weather.temperature')}</TableHead>
+            <TableHead>{t('weather.column')}</TableHead>
             <TableHead>Emplacements</TableHead>
-            <TableHead className="w-36 text-right">Actions</TableHead>
+            <TableHead className="w-44 text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -82,6 +83,16 @@ export function RucherTable({
                 <TableCell>{rucher.nb_emplacements}</TableCell>
                 <TableCell className="text-right">
                   <div className="inline-flex items-center justify-end gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => onWeather?.(rucher)}
+                      disabled={!position || loadingRucherId === rucher.id}
+                      aria-label={t('weather.buttonLabel')}
+                      title={position ? t('weather.buttonLabel') : t('weather.missingCoordinates')}
+                    >
+                      <CloudSun className="size-4" />
+                    </Button>
                     <Link
                       className={buttonVariants({ variant: 'ghost', size: 'icon' })}
                       to={`/ruchers/${rucher.id}`}

@@ -32,7 +32,10 @@ class RucherController extends Controller
     )]
     public function index(Request $request): JsonResponse
     {
-        $ruchers = Rucher::where('user_id', $request->user()->id)->get();
+        $ruchers = Rucher::query()
+            ->where('user_id', $request->user()->id)
+            ->with('latestWeatherReport')
+            ->get();
 
         return response()->json($ruchers);
     }
@@ -97,7 +100,7 @@ class RucherController extends Controller
     {
         abort_if($rucher->user_id !== $request->user()->id, 403);
 
-        return response()->json($rucher);
+        return response()->json($rucher->load('latestWeatherReport'));
     }
 
     #[OA\Put(
