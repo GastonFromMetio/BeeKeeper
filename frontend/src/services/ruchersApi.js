@@ -3,7 +3,6 @@ import { apiRequest } from './apiClient'
 function toRucherPayload(payload) {
   return {
     name: payload.name,
-    localisation: payload.localisation,
     latitude: Number(payload.latitude),
     longitude: Number(payload.longitude),
     description: payload.description || null,

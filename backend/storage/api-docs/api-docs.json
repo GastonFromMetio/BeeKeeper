@@ -632,7 +632,6 @@
                     "id",
                     "user_id",
                     "name",
-                    "localisation",
                     "latitude",
                     "longitude",
                     "nb_emplacements"
@@ -649,10 +648,6 @@
                     "name": {
                         "type": "string",
                         "example": "Rucher des Tilleuls"
-                    },
-                    "localisation": {
-                        "type": "string",
-                        "example": "Lyon"
                     },
                     "latitude": {
                         "type": "number",
@@ -805,7 +800,6 @@
             "StoreRucherRequest": {
                 "required": [
                     "name",
-                    "localisation",
                     "latitude",
                     "longitude",
                     "nb_emplacements"
@@ -814,10 +808,6 @@
                     "name": {
                         "type": "string",
                         "example": "Rucher des Tilleuls"
-                    },
-                    "localisation": {
-                        "type": "string",
-                        "example": "Lyon"
                     },
                     "latitude": {
                         "type": "number",
@@ -849,7 +839,6 @@
             "UpdateRucherRequest": {
                 "required": [
                     "name",
-                    "localisation",
                     "latitude",
                     "longitude",
                     "nb_emplacements"
@@ -858,10 +847,6 @@
                     "name": {
                         "type": "string",
                         "example": "Rucher du Verger"
-                    },
-                    "localisation": {
-                        "type": "string",
-                        "example": "Grenoble"
                     },
                     "latitude": {
                         "type": "number",

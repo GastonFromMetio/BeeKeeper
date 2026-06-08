@@ -19,7 +19,6 @@ class RucherApiTest extends TestCase
 
         $response = $this->postJson('/api/ruchers', [
             'name' => 'Rucher des Tilleuls',
-            'localisation' => 'Lyon',
             'latitude' => 45.764043,
             'longitude' => 4.835659,
             'description' => 'Rucher principal',
@@ -35,11 +34,12 @@ class RucherApiTest extends TestCase
         $this->assertDatabaseHas('ruchers', [
             'user_id' => $user->id,
             'name' => 'Rucher des Tilleuls',
-            'localisation' => 'Lyon',
             'latitude' => 45.764043,
             'longitude' => 4.835659,
             'nb_emplacements' => 12,
         ]);
+
+        $response->assertJsonMissingPath('data.localisation');
     }
 
     public function test_rucher_coordinates_are_required_when_creating(): void
@@ -48,7 +48,6 @@ class RucherApiTest extends TestCase
 
         $this->postJson('/api/ruchers', [
             'name' => 'Rucher incomplet',
-            'localisation' => 'Lyon',
             'nb_emplacements' => 12,
         ])
             ->assertUnprocessable()

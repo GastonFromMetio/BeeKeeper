@@ -1,6 +1,6 @@
 export const DEFAULT_RUCHER_POSITION = {
-  lat: 46.603354,
-  lng: 1.888334,
+  lat: 50.9513,
+  lng: 1.8587,
 }
 
 export function parseCoordinate(value) {

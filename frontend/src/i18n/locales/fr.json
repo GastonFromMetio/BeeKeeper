@@ -45,6 +45,32 @@
     "cardDescription": "Donnees renvoyees par /auth/me",
     "note": "Une fois la partie authentification validee ensemble, on pourra brancher les espaces ruchers et ruches sur la meme base."
   },
+  "weather": {
+    "title": "Meteo exterieure",
+    "description": "Derniers relevés récupérés depuis la liste des ruchers.",
+    "source": "Open-Meteo",
+    "loading": "Relevé météo en cours...",
+    "loadingDescription": "On consulte la température extérieure du rucher demandé.",
+    "emptyTitle": "Aucune météo consultée",
+    "emptyDescription": "Clique sur l'icône météo dans la liste des ruchers pour récupérer la température extérieure et l'afficher ici.",
+    "forRucher": "Sur {name}",
+    "apparent": "Ressenti",
+    "location": "Localisation",
+    "coordinates": "Coordonnées",
+    "updatedAt": "Consulté le",
+    "refreshing": "Mise à jour en cours...",
+    "recent": "Derniers relevés",
+    "buttonLabel": "Consulter la météo",
+    "missingCoordinates": "Coordonnées manquantes pour consulter la météo",
+    "success": "{name} : {temperature}",
+    "apiError": "Impossible de récupérer la météo"
+  },
+  "rucher": {
+    "form": {
+      "mapHint": "Clique sur la carte pour enregistrer les coordonnées du rucher."
+    },
+    "coordinatesMissing": "Non renseignées"
+  },
   "notFound": {
     "title": "Cette page n'existe pas",
     "description": "La route demandee ne correspond a aucun ecran actuellement branche dans le frontend.",

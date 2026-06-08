@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
 use App\Models\Ruche;
 
-#[Fillable(['user_id', 'name', 'localisation', 'latitude', 'longitude', 'description', 'nb_emplacements'])]
+#[Fillable(['user_id', 'name', 'latitude', 'longitude', 'description', 'nb_emplacements'])]
 class Rucher extends Model
 {
     protected function casts(): array

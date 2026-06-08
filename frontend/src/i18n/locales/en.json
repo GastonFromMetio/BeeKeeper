@@ -45,6 +45,32 @@
     "cardDescription": "Data returned by /auth/me",
     "note": "Once authentication looks good, we can plug ruchers and ruches pages onto the same foundation."
   },
+  "weather": {
+    "title": "Outside weather",
+    "description": "Latest readings fetched from the apiary list.",
+    "source": "Open-Meteo",
+    "loading": "Fetching weather report...",
+    "loadingDescription": "We are checking the outside temperature for the requested apiary.",
+    "emptyTitle": "No weather checked yet",
+    "emptyDescription": "Click the weather icon in the apiary list to fetch the outside temperature and show it here.",
+    "forRucher": "At {name}",
+    "apparent": "Feels like",
+    "location": "Location",
+    "coordinates": "Coordinates",
+    "updatedAt": "Checked on",
+    "refreshing": "Updating...",
+    "recent": "Recent readings",
+    "buttonLabel": "Check weather",
+    "missingCoordinates": "Missing coordinates to check weather",
+    "success": "{name}: {temperature}",
+    "apiError": "Unable to fetch weather"
+  },
+  "rucher": {
+    "form": {
+      "mapHint": "Click on the map to save the apiary coordinates."
+    },
+    "coordinatesMissing": "Not provided"
+  },
   "notFound": {
     "title": "This page does not exist",
     "description": "The requested route is not mapped to any screen currently wired into the frontend.",

@@ -4,23 +4,30 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { formatCoordinate, getRucherPosition } from '@/hooks/useRucherLocation'
+import {
+  DEFAULT_RUCHER_POSITION,
+  formatCoordinate,
+  getRucherPosition,
+} from '@/hooks/useRucherLocation'
+import { useTranslation } from 'react-i18next'
 
 const emptyRucher = {
   name: '',
-  localisation: '',
-  latitude: '',
-  longitude: '',
+  latitude: formatCoordinate(DEFAULT_RUCHER_POSITION.lat),
+  longitude: formatCoordinate(DEFAULT_RUCHER_POSITION.lng),
   description: '',
   nb_emplacements: 0,
 }
 
 function buildInitialRucher(initialValues) {
+  const position = getRucherPosition(initialValues) ?? DEFAULT_RUCHER_POSITION
+
   return {
     ...emptyRucher,
     ...initialValues,
-    latitude: initialValues?.latitude ?? '',
-    longitude: initialValues?.longitude ?? '',
+    latitude: formatCoordinate(position.lat),
+    longitude: formatCoordinate(position.lng),
+    nb_emplacements: initialValues?.nb_emplacements ?? 0,
     description: initialValues?.description ?? '',
   }
 }
@@ -28,6 +35,7 @@ function buildInitialRucher(initialValues) {
 export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel = 'Enregistrer' }) {
   const [form, setForm] = useState(() => buildInitialRucher(initialValues))
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { t } = useTranslation()
   const position = getRucherPosition(form)
 
   function updateField(event) {
@@ -63,42 +71,11 @@ export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel 
         <Input id="rucher-name" name="name" value={form.name} onChange={updateField} required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="localisation">Localisation</Label>
-        <Input id="localisation" name="localisation" value={form.localisation} onChange={updateField} required />
-      </div>
-      <div className="space-y-2">
         <Label>Position GPS</Label>
         <RucherLocationMap className="h-72" position={position} onPositionChange={updatePosition} />
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="latitude">Latitude</Label>
-            <Input
-              id="latitude"
-              name="latitude"
-              type="number"
-              min="-90"
-              max="90"
-              step="0.000001"
-              value={form.latitude}
-              onChange={updateField}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="longitude">Longitude</Label>
-            <Input
-              id="longitude"
-              name="longitude"
-              type="number"
-              min="-180"
-              max="180"
-              step="0.000001"
-              value={form.longitude}
-              onChange={updateField}
-              required
-            />
-          </div>
-        </div>
+        <p className="text-xs text-muted-foreground">
+          {t('rucher.form.mapHint')}
+        </p>
       </div>
       <div className="space-y-2">
         <Label htmlFor="nb_emplacements">Emplacements</Label>
