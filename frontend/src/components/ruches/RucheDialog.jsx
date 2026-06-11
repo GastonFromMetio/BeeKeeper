@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { ApiErrorAlert } from '@/components/feedback/ApiErrorAlert'
 import { Button } from '@/components/ui/button'
@@ -12,26 +13,28 @@ export function RucheDialog({
   ruchers,
   initialValues,
   onSaved,
-  triggerLabel = 'Nouvelle ruche',
+  triggerLabel,
   open,
   onOpenChange,
 }) {
   const { token } = useAuth()
+  const { t } = useTranslation()
   const [internalOpen, setInternalOpen] = useState(false)
   const [error, setError] = useState(null)
   const isEdit = Boolean(ruche)
   const isOpen = open ?? internalOpen
   const setOpen = onOpenChange ?? setInternalOpen
+  const resolvedTriggerLabel = triggerLabel === undefined ? t('ruches.new') : triggerLabel
 
   async function handleSubmit(payload) {
     try {
       setError(null)
       if (isEdit) {
         await updateRuche(token, ruche.id, payload)
-        toast.success('Ruche modifiée')
+        toast.success(t('ruches.updated'))
       } else {
         await createRuche(token, payload)
-        toast.success('Ruche créée')
+        toast.success(t('ruches.created'))
       }
       setOpen(false)
       await onSaved?.()
@@ -42,21 +45,21 @@ export function RucheDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
-      {triggerLabel && (
+      {resolvedTriggerLabel && (
         <DialogTrigger render={<Button type="button" />}>
-          {triggerLabel}
+          {resolvedTriggerLabel}
         </DialogTrigger>
       )}
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Modifier la ruche' : 'Créer une ruche'}</DialogTitle>
+          <DialogTitle>{isEdit ? t('ruches.editTitle') : t('ruches.createTitle')}</DialogTitle>
         </DialogHeader>
         <ApiErrorAlert error={error} />
         <RucheForm
           ruchers={ruchers}
           initialValues={ruche ?? initialValues}
           onSubmit={handleSubmit}
-          submitLabel={isEdit ? 'Modifier' : 'Créer'}
+          submitLabel={isEdit ? t('ruches.edit') : t('ruches.create')}
         />
       </DialogContent>
     </Dialog>

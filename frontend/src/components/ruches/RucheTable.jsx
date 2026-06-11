@@ -1,11 +1,14 @@
 import { Pencil, Trash2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { RucheStatusBadge } from './RucheStatusBadge'
 
 export function RucheTable({ ruches, ruchers, onEdit, onDelete }) {
+  const { t } = useTranslation()
+
   function getRucherName(rucherId) {
-    return ruchers.find((rucher) => Number(rucher.id) === Number(rucherId))?.name ?? 'Inconnu'
+    return ruchers.find((rucher) => Number(rucher.id) === Number(rucherId))?.name ?? t('ruches.noApiary')
   }
 
   return (
@@ -13,12 +16,12 @@ export function RucheTable({ ruches, ruchers, onEdit, onDelete }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nom</TableHead>
-            <TableHead>Rucher</TableHead>
-            <TableHead>Statut</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Année reine</TableHead>
-            <TableHead className="w-28 text-right">Actions</TableHead>
+            <TableHead>{t('ruches.table.name')}</TableHead>
+            <TableHead>{t('ruches.table.apiary')}</TableHead>
+            <TableHead>{t('ruches.table.status')}</TableHead>
+            <TableHead>{t('ruches.table.type')}</TableHead>
+            <TableHead>{t('ruches.table.queenYear')}</TableHead>
+            <TableHead className="w-28 text-right">{t('ruches.table.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -30,10 +33,10 @@ export function RucheTable({ ruches, ruchers, onEdit, onDelete }) {
               <TableCell>{ruche.type_ruche}</TableCell>
               <TableCell>{ruche.annee_reine ?? '-'}</TableCell>
               <TableCell className="space-x-1 text-right">
-                <Button variant="ghost" size="icon" onClick={() => onEdit(ruche)} aria-label="Modifier">
+                <Button variant="ghost" size="icon" onClick={() => onEdit(ruche)} aria-label={t('common.edit')}>
                   <Pencil className="size-4" />
                 </Button>
-                <Button variant="ghost" size="icon" onClick={() => onDelete(ruche)} aria-label="Supprimer">
+                <Button variant="ghost" size="icon" onClick={() => onDelete(ruche)} aria-label={t('common.delete')}>
                   <Trash2 className="size-4" />
                 </Button>
               </TableCell>

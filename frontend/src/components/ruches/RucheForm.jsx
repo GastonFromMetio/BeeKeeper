@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -21,7 +22,8 @@ function normalizeInitialValues(values) {
   }
 }
 
-export function RucheForm({ ruchers, initialValues = emptyRuche, onSubmit, submitLabel = 'Enregistrer' }) {
+export function RucheForm({ ruchers, initialValues = emptyRuche, onSubmit, submitLabel }) {
+  const { t } = useTranslation()
   const [form, setForm] = useState(normalizeInitialValues(initialValues))
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -42,7 +44,7 @@ export function RucheForm({ ruchers, initialValues = emptyRuche, onSubmit, submi
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="rucher_id">Rucher</Label>
+        <Label htmlFor="rucher_id">{t('ruche.form.apiary')}</Label>
         <select
           id="rucher_id"
           name="rucher_id"
@@ -51,18 +53,18 @@ export function RucheForm({ ruchers, initialValues = emptyRuche, onSubmit, submi
           onChange={updateField}
           required
         >
-          <option value="">Choisir un rucher</option>
+          <option value="">{t('ruche.form.chooseApiary')}</option>
           {ruchers.map((rucher) => (
             <option key={rucher.id} value={rucher.id}>{rucher.name}</option>
           ))}
         </select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="ruche-name">Nom</Label>
+        <Label htmlFor="ruche-name">{t('ruche.form.name')}</Label>
         <Input id="ruche-name" name="name" value={form.name} onChange={updateField} required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="statut">Statut</Label>
+        <Label htmlFor="statut">{t('ruche.form.status')}</Label>
         <select
           id="statut"
           name="statut"
@@ -70,25 +72,25 @@ export function RucheForm({ ruchers, initialValues = emptyRuche, onSubmit, submi
           value={form.statut}
           onChange={updateField}
         >
-          <option value="active">Active</option>
-          <option value="en_observation">En observation</option>
-          <option value="inactive">Inactive</option>
+          <option value="active">{t('ruche.status.activeFull')}</option>
+          <option value="en_observation">{t('ruche.status.en_observationFull')}</option>
+          <option value="inactive">{t('ruche.status.inactiveFull')}</option>
         </select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="type_ruche">Type de ruche</Label>
+        <Label htmlFor="type_ruche">{t('ruche.form.type')}</Label>
         <Input id="type_ruche" name="type_ruche" value={form.type_ruche} onChange={updateField} required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="annee_reine">Année reine</Label>
+        <Label htmlFor="annee_reine">{t('ruche.form.queenYear')}</Label>
         <Input id="annee_reine" name="annee_reine" type="number" min="2000" value={form.annee_reine ?? ''} onChange={updateField} />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="notes">Notes</Label>
+        <Label htmlFor="notes">{t('ruche.form.notes')}</Label>
         <Textarea id="notes" name="notes" value={form.notes ?? ''} onChange={updateField} />
       </div>
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Enregistrement...' : submitLabel}
+        {isSubmitting ? t('common.saving') : submitLabel ?? t('ruches.create')}
       </Button>
     </form>
   )

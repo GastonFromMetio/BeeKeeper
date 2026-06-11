@@ -56,12 +56,12 @@ export function RucherDetailPage() {
 
   async function handleDelete(ruche) {
     const rucheName = ruche.name ?? ruche.nom
-    if (!window.confirm(`Supprimer ${rucheName} ?`)) return
+    if (!window.confirm(t('ruches.confirmDelete', { name: rucheName }))) return
 
     try {
       setMutationError(null)
       await deleteRuche(token, ruche.id)
-      toast.success('Ruche supprimée')
+      toast.success(t('ruches.deleted'))
       await ruchesState.refetch()
     } catch (apiError) {
       setMutationError(apiError)
@@ -87,13 +87,13 @@ export function RucherDetailPage() {
   }
 
   if (rucherState.isLoading || ruchesState.isLoading) {
-    return <LoadingState variant="detail" label="Chargement du rucher..." />
+    return <LoadingState variant="detail" label={t('ruchers.loading')} />
   }
 
   return (
     <div className="space-y-6">
       <Link className={buttonVariants({ variant: 'outline' })} to="/ruchers">
-        Retour aux ruchers
+        {t('ruchers.back')}
       </Link>
       <ApiErrorAlert error={rucherState.error || ruchesState.error || ruchersState.error || mutationError} />
       {rucherState.rucher && (
@@ -108,7 +108,7 @@ export function RucherDetailPage() {
             )}
             {rucherState.rucher.description && <p className="mt-3 text-sm">{rucherState.rucher.description}</p>}
             <p className="mt-3 text-sm text-muted-foreground">
-              {rucherState.rucher.nb_emplacements} emplacements
+              {t('rucher.capacityCount', { count: Number(rucherState.rucher.nb_emplacements) })}
             </p>
           </div>
           {rucherPosition && (
@@ -133,7 +133,7 @@ export function RucherDetailPage() {
       )}
       <section className="space-y-3">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="text-lg font-medium">Ruches du rucher</h2>
+          <h2 className="text-lg font-medium">{t('ruches.forApiary')}</h2>
           <RucheDialog
             ruchers={ruchersState.ruchers}
             initialValues={{ rucher_id: rucherId }}

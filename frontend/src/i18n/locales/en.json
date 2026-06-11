@@ -47,6 +47,8 @@
   },
   "weather": {
     "title": "Outside weather",
+    "detailsTitle": "Apiary weather",
+    "detailsDescription": "Temperature, wind, humidity, and coordinates from the latest reading.",
     "column": "Weather",
     "temperature": "Temperature",
     "description": "Latest readings fetched from the apiary list.",
@@ -60,6 +62,8 @@
     "forRucher": "At {{name}}",
     "apparent": "Feels like",
     "feelsLike": "Feels like {{value}}",
+    "wind": "Wind",
+    "humidity": "Humidity",
     "location": "Location",
     "coordinates": "Coordinates",
     "updatedAt": "Checked on",
@@ -72,9 +76,134 @@
   },
   "rucher": {
     "form": {
+      "name": "Name",
+      "gpsPosition": "GPS position",
+      "capacity": "Slots",
+      "description": "Description",
       "mapHint": "Click on the map to save the apiary coordinates."
     },
-    "coordinatesMissing": "Not provided"
+    "coordinatesMissing": "Not provided",
+    "capacityCount_one": "{{count}} slot",
+    "capacityCount_other": "{{count}} slots"
+  },
+  "ruchers": {
+    "title": "Apiaries",
+    "description": "Manage apiary slots.",
+    "new": "New apiary",
+    "back": "Back to apiaries",
+    "loading": "Loading apiaries...",
+    "emptyTitle": "No apiaries",
+    "emptyDescription": "Create your first apiary.",
+    "confirmDelete": "Delete {{name}}?",
+    "created": "Apiary created",
+    "updated": "Apiary updated",
+    "deleted": "Apiary deleted",
+    "createTitle": "Create an apiary",
+    "editTitle": "Edit apiary",
+    "create": "Create",
+    "edit": "Edit",
+    "table": {
+      "name": "Name",
+      "coordinates": "Coordinates",
+      "capacity": "Slots",
+      "actions": "Actions"
+    }
+  },
+  "ruche": {
+    "form": {
+      "apiary": "Apiary",
+      "chooseApiary": "Choose an apiary",
+      "name": "Name",
+      "status": "Status",
+      "type": "Hive type",
+      "queenYear": "Queen year",
+      "notes": "Notes"
+    },
+    "status": {
+      "active": "Active",
+      "en_observation": "Observation",
+      "inactive": "Inactive",
+      "activeFull": "Active",
+      "en_observationFull": "Under observation",
+      "inactiveFull": "Inactive"
+    }
+  },
+  "ruches": {
+    "title": "Hives",
+    "description": "Manage colonies.",
+    "new": "New hive",
+    "loading": "Loading hives...",
+    "emptyTitle": "No hives",
+    "emptyDescription": "Create your first hive.",
+    "confirmDelete": "Delete {{name}}?",
+    "created": "Hive created",
+    "updated": "Hive updated",
+    "deleted": "Hive deleted",
+    "createTitle": "Create a hive",
+    "editTitle": "Edit hive",
+    "create": "Create",
+    "edit": "Edit",
+    "forApiary": "Apiary hives",
+    "noApiary": "Unknown apiary",
+    "noneForApiary": "No hives attached to this apiary.",
+    "table": {
+      "name": "Name",
+      "apiary": "Apiary",
+      "status": "Status",
+      "type": "Type",
+      "queenYear": "Queen year",
+      "actions": "Actions"
+    }
+  },
+  "dashboard": {
+    "loading": "Loading dashboard...",
+    "kicker": "Apiary operations",
+    "title": "Operations dashboard",
+    "description": "Track apiary capacity, colonies to watch, and the latest checked weather readings.",
+    "manageApiaries": "Manage apiaries",
+    "addHive": "Add hive",
+    "trackedApiaries": "Tracked apiaries",
+    "availableSlots_one": "{{count}} slot still available",
+    "availableSlots_other": "{{count}} slots still available",
+    "activeHives": "Active hives",
+    "hiveStatusDetail": "{{observation}} under observation, {{inactive}} inactive",
+    "globalOccupancy": "Global occupancy",
+    "occupancyDetail": "{{hives}} hives for {{slots}} slots",
+    "checkedWeather": "Checked weather",
+    "noManualWeather": "No manual reading",
+    "colonies": "Colonies",
+    "coloniesDescription": "Filter hives by status to isolate the actions to take.",
+    "statusFilter": {
+      "all": "All",
+      "active": "Active",
+      "en_observation": "Observation",
+      "inactive": "Inactive"
+    },
+    "slotOccupancy": "Slot occupancy",
+    "displayedHives_one": "{{count}} hive shown",
+    "displayedHives_other": "{{count}} hives shown",
+    "selectedApiary": "Selected apiary",
+    "selectedApiaryDescription": "Quick view of capacity, coordinates, and colonies.",
+    "usedCapacity": "Used capacity",
+    "apiaryColonies": "Apiary colonies",
+    "createApiaryPrompt": "Create an apiary to populate the dashboard.",
+    "businessAlerts": "Business alerts",
+    "businessAlertsDescription": "Simple detection of situations that need a check.",
+    "noAlerts": "No priority alerts with the current data.",
+    "globalMap": "Global map",
+    "globalMapDescription": "Position of every apiary with coordinates.",
+    "mapEmpty": "Add GPS coordinates to your apiaries to show them here.",
+    "markerLabel": "{{name}} · {{hives}}/{{capacity}} slots",
+    "alertFullTitle": "{{name}} is full",
+    "alertFullDetail": "{{hives}}/{{capacity}} slots occupied.",
+    "alertInactiveTitle": "{{name}} inactive",
+    "alertCheckIn": "Check in {{name}}.",
+    "alertCheck": "Check needed.",
+    "alertOldQueenTitle": "Older queen in {{name}}",
+    "alertOldQueenDetail": "Queen year {{year}}. Plan an inspection.",
+    "alertWindTitle": "Strong wind at {{name}}",
+    "alertTemperatureTitle": "Temperature to watch at {{name}}",
+    "alertTemperatureDetail": "{{temperature}} reading."
   },
   "notFound": {
     "title": "This page does not exist",
@@ -87,6 +216,18 @@
     "description": "Account, language, and session.",
     "account": "Account",
     "language": "Language"
+  },
+  "common": {
+    "actions": "Actions",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "open": "Open",
+    "saving": "Saving...",
+    "unknown": "Unknown"
+  },
+  "map": {
+    "loading": "Loading map..."
   },
   "errors": {
     "generic": "Something went wrong"

@@ -32,7 +32,7 @@ function buildInitialRucher(initialValues) {
   }
 }
 
-export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel = 'Enregistrer' }) {
+export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel }) {
   const [form, setForm] = useState(() => buildInitialRucher(initialValues))
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { t } = useTranslation()
@@ -67,18 +67,18 @@ export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="rucher-name">Nom</Label>
+        <Label htmlFor="rucher-name">{t('rucher.form.name')}</Label>
         <Input id="rucher-name" name="name" value={form.name} onChange={updateField} required />
       </div>
       <div className="space-y-2">
-        <Label>Position GPS</Label>
+        <Label>{t('rucher.form.gpsPosition')}</Label>
         <RucherLocationMap className="h-72" position={position} onPositionChange={updatePosition} />
         <p className="text-xs text-muted-foreground">
           {t('rucher.form.mapHint')}
         </p>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="nb_emplacements">Emplacements</Label>
+        <Label htmlFor="nb_emplacements">{t('rucher.form.capacity')}</Label>
         <Input
           id="nb_emplacements"
           name="nb_emplacements"
@@ -90,11 +90,11 @@ export function RucherForm({ initialValues = emptyRucher, onSubmit, submitLabel 
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">{t('rucher.form.description')}</Label>
         <Textarea id="description" name="description" value={form.description ?? ''} onChange={updateField} />
       </div>
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Enregistrement...' : submitLabel}
+        {isSubmitting ? t('common.saving') : submitLabel ?? t('ruchers.create')}
       </Button>
     </form>
   )

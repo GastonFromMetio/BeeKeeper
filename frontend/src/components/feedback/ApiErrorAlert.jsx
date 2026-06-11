@@ -19,7 +19,7 @@ export function ApiErrorAlert({ error }) {
   return (
     <Alert variant="destructive">
       <TriangleAlert className="size-4" />
-      <AlertTitle>{error.message || t('errors.generic')}</AlertTitle>
+      <AlertTitle>{error.i18nKey ? t(error.i18nKey) : error.message || t('errors.generic')}</AlertTitle>
       {details.length > 0 && (
         <AlertDescription>
           <ul className="ml-4 list-disc space-y-1">

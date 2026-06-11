@@ -26,17 +26,11 @@ import { useRuches } from '@/hooks/useRuches'
 import { cn } from '@/lib/utils'
 
 const statusFilters = [
-  { value: 'all', label: 'Toutes' },
-  { value: 'active', label: 'Actives' },
-  { value: 'en_observation', label: 'Observation' },
-  { value: 'inactive', label: 'Inactives' },
+  { value: 'all', labelKey: 'dashboard.statusFilter.all' },
+  { value: 'active', labelKey: 'dashboard.statusFilter.active' },
+  { value: 'en_observation', labelKey: 'dashboard.statusFilter.en_observation' },
+  { value: 'inactive', labelKey: 'dashboard.statusFilter.inactive' },
 ]
-
-const statusLabels = {
-  active: 'Active',
-  en_observation: 'En observation',
-  inactive: 'Inactive',
-}
 
 const statusStyles = {
   active: 'border-emerald-200 bg-emerald-50 text-emerald-700',
@@ -102,9 +96,11 @@ function ProgressBar({ value, className }) {
 }
 
 function StatusBadge({ status }) {
+  const { t } = useTranslation()
+
   return (
     <Badge variant="outline" className={cn('capitalize', statusStyles[status])}>
-      {statusLabels[status] ?? status}
+      {t(`ruche.status.${status}Full`, { defaultValue: status })}
     </Badge>
   )
 }
@@ -180,9 +176,13 @@ export function DashboardPage() {
     .filter((rucher) => rucher.position)
     .map((rucher) => ({
       id: rucher.id,
-      label: `${rucher.name} · ${rucher.ruchesCount}/${rucher.capacity} emplacements`,
+      label: t('dashboard.markerLabel', {
+        name: rucher.name,
+        hives: rucher.ruchesCount,
+        capacity: rucher.capacity,
+      }),
       position: rucher.position,
-    })), [dashboard.ruchersWithStats])
+    })), [dashboard.ruchersWithStats, t])
   const businessAlerts = useMemo(() => {
     const currentYear = new Date().getFullYear()
     const alerts = []
@@ -191,8 +191,11 @@ export function DashboardPage() {
       if (rucher.capacity > 0 && rucher.ruchesCount >= rucher.capacity) {
         alerts.push({
           id: `full-${rucher.id}`,
-          title: `${rucher.name} est plein`,
-          detail: `${rucher.ruchesCount}/${rucher.capacity} emplacements occupés.`,
+          title: t('dashboard.alertFullTitle', { name: rucher.name }),
+          detail: t('dashboard.alertFullDetail', {
+            hives: rucher.ruchesCount,
+            capacity: rucher.capacity,
+          }),
           tone: 'amber',
         })
       }
@@ -202,8 +205,8 @@ export function DashboardPage() {
       const rucher = dashboard.ruchers.find((item) => String(item.id) === String(ruche.rucher_id))
       alerts.push({
         id: `inactive-${ruche.id}`,
-        title: `${ruche.name ?? ruche.nom} inactive`,
-        detail: rucher ? `À vérifier dans ${rucher.name}.` : 'À vérifier.',
+        title: t('dashboard.alertInactiveTitle', { name: ruche.name ?? ruche.nom }),
+        detail: rucher ? t('dashboard.alertCheckIn', { name: rucher.name }) : t('dashboard.alertCheck'),
         tone: 'slate',
       })
     }
@@ -213,8 +216,8 @@ export function DashboardPage() {
       .slice(0, 3)) {
       alerts.push({
         id: `queen-${ruche.id}`,
-        title: `Reine ancienne sur ${ruche.name ?? ruche.nom}`,
-        detail: `Année reine ${ruche.annee_reine}. Prévoir un contrôle.`,
+        title: t('dashboard.alertOldQueenTitle', { name: ruche.name ?? ruche.nom }),
+        detail: t('dashboard.alertOldQueenDetail', { year: ruche.annee_reine }),
         tone: 'amber',
       })
     }
@@ -223,7 +226,7 @@ export function DashboardPage() {
       if (Number(report.windSpeed) >= 40) {
         alerts.push({
           id: `wind-${report.rucherId}-${report.fetchedAt}`,
-          title: `Vent fort sur ${report.rucherName}`,
+          title: t('dashboard.alertWindTitle', { name: report.rucherName }),
           detail: `${formatNumber(report.windSpeed)} ${report.windSpeedUnit}.`,
           tone: 'sky',
         })
@@ -232,15 +235,17 @@ export function DashboardPage() {
       if (Number(report.temperature) <= 8 || Number(report.temperature) >= 35) {
         alerts.push({
           id: `temperature-${report.rucherId}-${report.fetchedAt}`,
-          title: `Température à surveiller sur ${report.rucherName}`,
-          detail: `${formatTemperature(report.temperature, report.temperatureUnit)} relevés.`,
+          title: t('dashboard.alertTemperatureTitle', { name: report.rucherName }),
+          detail: t('dashboard.alertTemperatureDetail', {
+            temperature: formatTemperature(report.temperature, report.temperatureUnit),
+          }),
           tone: 'sky',
         })
       }
     }
 
     return alerts.slice(0, 6)
-  }, [dashboard.ruchers, dashboard.ruchersWithStats, dashboard.ruches, reports])
+  }, [dashboard.ruchers, dashboard.ruchersWithStats, dashboard.ruches, reports, t])
 
   useEffect(() => {
     primeWeatherReportsFromRuchers(ruchersState.ruchers)
@@ -259,7 +264,7 @@ export function DashboardPage() {
   }
 
   if (ruchersState.isLoading || ruchesState.isLoading) {
-    return <LoadingState variant="dashboard" label="Chargement du tableau de bord..." />
+    return <LoadingState variant="dashboard" label={t('dashboard.loading')} />
   }
 
   return (
@@ -268,21 +273,21 @@ export function DashboardPage() {
         <div className="max-w-3xl">
           <div className="mb-3 inline-flex items-center gap-2 rounded-lg border bg-white/80 px-3 py-1 text-sm text-muted-foreground">
             <Sparkles className="size-4 text-primary" />
-            Pilotage apicole
+            {t('dashboard.kicker')}
           </div>
-          <h1 className="text-3xl font-semibold leading-tight">Tableau de bord opérationnel</h1>
+          <h1 className="text-3xl font-semibold leading-tight">{t('dashboard.title')}</h1>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Suivez la capacité des ruchers, les colonies à surveiller et les derniers relevés météo consultés.
+            {t('dashboard.description')}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Link className={buttonVariants({ variant: 'outline' })} to="/ruchers">
             <MapPinned className="size-4" />
-            Gérer les ruchers
+            {t('dashboard.manageApiaries')}
           </Link>
           <Link className={buttonVariants()} to="/ruches">
             <Plus className="size-4" />
-            Ajouter une ruche
+            {t('dashboard.addHive')}
           </Link>
         </div>
       </div>
@@ -292,29 +297,35 @@ export function DashboardPage() {
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           icon={MapPinned}
-          title="Ruchers suivis"
+          title={t('dashboard.trackedApiaries')}
           value={dashboard.ruchers.length}
-          detail={`${dashboard.availableSlots} emplacements encore disponibles`}
+          detail={t('dashboard.availableSlots', { count: dashboard.availableSlots })}
         />
         <MetricCard
           icon={Warehouse}
-          title="Ruches actives"
+          title={t('dashboard.activeHives')}
           value={dashboard.activeRuches}
-          detail={`${dashboard.observationRuches} en observation, ${dashboard.inactiveRuches} inactives`}
+          detail={t('dashboard.hiveStatusDetail', {
+            observation: dashboard.observationRuches,
+            inactive: dashboard.inactiveRuches,
+          })}
           tone="green"
         />
         <MetricCard
           icon={Activity}
-          title="Occupation globale"
+          title={t('dashboard.globalOccupancy')}
           value={`${dashboard.globalOccupancy}%`}
-          detail={`${dashboard.ruches.length} ruches pour ${dashboard.totalEmplacements} emplacements`}
+          detail={t('dashboard.occupancyDetail', {
+            hives: dashboard.ruches.length,
+            slots: dashboard.totalEmplacements,
+          })}
           tone="amber"
         />
         <MetricCard
           icon={CloudSun}
-          title="Météo consultée"
+          title={t('dashboard.checkedWeather')}
           value={reports.length}
-          detail={latestReport ? `${latestReport.rucherName} · ${formatTemperature(latestReport.temperature, latestReport.temperatureUnit)}` : 'Aucun relevé manuel'}
+          detail={latestReport ? `${latestReport.rucherName} · ${formatTemperature(latestReport.temperature, latestReport.temperatureUnit)}` : t('dashboard.noManualWeather')}
           tone="blue"
         />
       </section>
@@ -324,8 +335,8 @@ export function DashboardPage() {
           <CardHeader>
             <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
               <div>
-                <CardTitle>Colonies</CardTitle>
-                <CardDescription>Filtrez les ruches par état pour isoler les actions à mener.</CardDescription>
+                <CardTitle>{t('dashboard.colonies')}</CardTitle>
+                <CardDescription>{t('dashboard.coloniesDescription')}</CardDescription>
               </div>
               <div className="flex flex-wrap gap-1 rounded-lg border bg-background p-1">
                 {statusFilters.map((filter) => (
@@ -336,7 +347,7 @@ export function DashboardPage() {
                     variant={statusFilter === filter.value ? 'default' : 'ghost'}
                     onClick={() => setStatusFilter(filter.value)}
                   >
-                    {filter.label}
+                    {t(filter.labelKey)}
                   </Button>
                 ))}
               </div>
@@ -345,22 +356,22 @@ export function DashboardPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-3 md:grid-cols-3">
               <div className="rounded-lg border bg-emerald-50/70 p-3">
-                <p className="text-sm text-emerald-700">Actives</p>
+                <p className="text-sm text-emerald-700">{t('dashboard.statusFilter.active')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.activeRuches}</p>
               </div>
               <div className="rounded-lg border bg-amber-50/70 p-3">
-                <p className="text-sm text-amber-700">En observation</p>
+                <p className="text-sm text-amber-700">{t('dashboard.statusFilter.en_observation')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.observationRuches}</p>
               </div>
               <div className="rounded-lg border bg-slate-50 p-3">
-                <p className="text-sm text-slate-700">Inactives</p>
+                <p className="text-sm text-slate-700">{t('dashboard.statusFilter.inactive')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.inactiveRuches}</p>
               </div>
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="font-medium">Occupation des emplacements</span>
+                <span className="font-medium">{t('dashboard.slotOccupancy')}</span>
                 <span className="text-muted-foreground">{dashboard.globalOccupancy}%</span>
               </div>
               <ProgressBar value={dashboard.globalOccupancy} className="bg-amber-500" />
@@ -368,7 +379,7 @@ export function DashboardPage() {
 
             <div className="space-y-2">
               <p className="text-sm font-medium">
-                {dashboard.filteredRuches.length} ruche{dashboard.filteredRuches.length > 1 ? 's' : ''} affichée{dashboard.filteredRuches.length > 1 ? 's' : ''}
+                {t('dashboard.displayedHives', { count: dashboard.filteredRuches.length })}
               </p>
               <div className="grid gap-2 sm:grid-cols-2">
                 {dashboard.filteredRuches.slice(0, 8).map((ruche) => {
@@ -379,7 +390,7 @@ export function DashboardPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="font-medium">{ruche.name ?? ruche.nom}</p>
-                          <p className="mt-1 text-xs text-muted-foreground">{rucher?.name ?? 'Rucher inconnu'}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">{rucher?.name ?? t('ruches.noApiary')}</p>
                         </div>
                         <StatusBadge status={ruche.statut} />
                       </div>
@@ -393,8 +404,8 @@ export function DashboardPage() {
 
         <Card className="bg-white/95 shadow-sm">
           <CardHeader>
-            <CardTitle>Rucher sélectionné</CardTitle>
-            <CardDescription>Vue rapide de la capacité, des coordonnées et des colonies.</CardDescription>
+            <CardTitle>{t('dashboard.selectedApiary')}</CardTitle>
+            <CardDescription>{t('dashboard.selectedApiaryDescription')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {selectedRucher ? (
@@ -420,7 +431,7 @@ export function DashboardPage() {
                       <p className="mt-1 text-sm text-muted-foreground">
                         {selectedRucher.position
                           ? `${formatCoordinate(selectedRucher.position.lat)}, ${formatCoordinate(selectedRucher.position.lng)}`
-                          : 'Coordonnées non renseignées'}
+                          : t('rucher.coordinatesMissing')}
                       </p>
                       {selectedWeatherReport ? (
                         <p className="mt-2 inline-flex items-center gap-2 rounded-lg bg-sky-50 px-2.5 py-1 text-sm font-medium text-sky-700">
@@ -441,13 +452,13 @@ export function DashboardPage() {
                         disabled={!selectedRucher.position || pendingRucherId === selectedRucher.id}
                       >
                         <CloudSun className="size-4" />
-                        {pendingRucherId === selectedRucher.id ? 'Consultation...' : 'Météo'}
+                        {pendingRucherId === selectedRucher.id ? t('weather.loadingShort') : t('weather.column')}
                       </Button>
                       <Link
                         className={buttonVariants({ variant: 'outline', size: 'sm' })}
                         to={`/ruchers/${selectedRucher.id}`}
                       >
-                        Ouvrir
+                        {t('common.open')}
                         <ArrowRight className="size-4" />
                       </Link>
                     </div>
@@ -455,7 +466,7 @@ export function DashboardPage() {
 
                   <div className="mt-5 space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span>Capacité utilisée</span>
+                      <span>{t('dashboard.usedCapacity')}</span>
                       <span className="font-medium">
                         {selectedRucher.ruchesCount}/{selectedRucher.capacity}
                       </span>
@@ -466,21 +477,21 @@ export function DashboardPage() {
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
                     <div className="rounded-lg bg-emerald-50 p-2 text-emerald-700">
                       <p className="font-semibold">{selectedRucher.activeCount}</p>
-                      <p className="text-xs">Actives</p>
+                      <p className="text-xs">{t('dashboard.statusFilter.active')}</p>
                     </div>
                     <div className="rounded-lg bg-amber-50 p-2 text-amber-700">
                       <p className="font-semibold">{selectedRucher.observationCount}</p>
-                      <p className="text-xs">Observation</p>
+                      <p className="text-xs">{t('dashboard.statusFilter.en_observation')}</p>
                     </div>
                     <div className="rounded-lg bg-slate-50 p-2 text-slate-700">
                       <p className="font-semibold">{selectedRucher.inactiveCount}</p>
-                      <p className="text-xs">Inactives</p>
+                      <p className="text-xs">{t('dashboard.statusFilter.inactive')}</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-medium">Colonies du rucher</p>
+                  <p className="text-sm font-medium">{t('dashboard.apiaryColonies')}</p>
                   {selectedRuches.length > 0 ? (
                     selectedRuches.slice(0, 5).map((ruche) => (
                       <div key={ruche.id} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
@@ -493,14 +504,14 @@ export function DashboardPage() {
                     ))
                   ) : (
                     <div className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
-                      Aucune ruche associée à ce rucher.
+                      {t('ruches.noneForApiary')}
                     </div>
                   )}
                 </div>
               </>
             ) : (
               <div className="rounded-lg border border-dashed p-5 text-sm text-muted-foreground">
-                Créez un rucher pour alimenter le tableau de bord.
+                {t('dashboard.createApiaryPrompt')}
               </div>
             )}
           </CardContent>
@@ -510,8 +521,8 @@ export function DashboardPage() {
       <section className="grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <Card className="bg-white/95 shadow-sm">
           <CardHeader>
-            <CardTitle>Alertes métier</CardTitle>
-            <CardDescription>Détection simple des situations qui demandent un contrôle.</CardDescription>
+            <CardTitle>{t('dashboard.businessAlerts')}</CardTitle>
+            <CardDescription>{t('dashboard.businessAlertsDescription')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {businessAlerts.length > 0 ? (
@@ -536,7 +547,7 @@ export function DashboardPage() {
               ))
             ) : (
               <div className="rounded-lg border border-dashed bg-muted/20 p-5 text-sm text-muted-foreground">
-                Aucune alerte prioritaire avec les données actuelles.
+                {t('dashboard.noAlerts')}
               </div>
             )}
           </CardContent>
@@ -544,15 +555,15 @@ export function DashboardPage() {
 
         <Card className="bg-white/95 shadow-sm">
           <CardHeader>
-            <CardTitle>Carte globale</CardTitle>
-            <CardDescription>Position de tous les ruchers renseignés.</CardDescription>
+            <CardTitle>{t('dashboard.globalMap')}</CardTitle>
+            <CardDescription>{t('dashboard.globalMapDescription')}</CardDescription>
           </CardHeader>
           <CardContent>
             {mapMarkers.length > 0 ? (
               <RucherLocationMap className="h-96" disabled markers={mapMarkers} />
             ) : (
               <div className="rounded-lg border border-dashed bg-muted/20 p-5 text-sm text-muted-foreground">
-                Ajoutez des coordonnées GPS à vos ruchers pour les afficher ici.
+                {t('dashboard.mapEmpty')}
               </div>
             )}
           </CardContent>

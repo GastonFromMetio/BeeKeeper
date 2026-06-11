@@ -1,9 +1,10 @@
 import { apiRequest } from '@/services/apiClient'
 
 export class WeatherApiError extends Error {
-  constructor(message) {
+  constructor(message, i18nKey) {
     super(message)
     this.name = 'WeatherApiError'
+    this.i18nKey = i18nKey
   }
 }
 

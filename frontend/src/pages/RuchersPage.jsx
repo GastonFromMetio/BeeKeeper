@@ -41,12 +41,12 @@ export function RuchersPage() {
   }, [primeWeatherReportsFromRuchers, ruchers])
 
   async function handleDelete(rucher) {
-    if (!window.confirm(`Supprimer ${rucher.name} ?`)) return
+    if (!window.confirm(t('ruchers.confirmDelete', { name: rucher.name }))) return
 
     try {
       setMutationError(null)
       await deleteRucher(token, rucher.id)
-      toast.success('Rucher supprimé')
+      toast.success(t('ruchers.deleted'))
       await refetch()
     } catch (apiError) {
       setMutationError(apiError)
@@ -67,20 +67,20 @@ export function RuchersPage() {
     }
   }
 
-  if (isLoading) return <LoadingState variant="table" columns={5} label="Chargement des ruchers..." />
+  if (isLoading) return <LoadingState variant="table" columns={5} label={t('ruchers.loading')} />
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Ruchers</h1>
-          <p className="text-sm text-muted-foreground">Gestion des emplacements.</p>
+          <h1 className="text-2xl font-semibold">{t('ruchers.title')}</h1>
+          <p className="text-sm text-muted-foreground">{t('ruchers.description')}</p>
         </div>
         <RucherDialog onSaved={refetch} />
       </div>
       <ApiErrorAlert error={error || mutationError} />
       {ruchers.length === 0 ? (
-        <EmptyState title="Aucun rucher" description="Créez votre premier rucher." />
+        <EmptyState title={t('ruchers.emptyTitle')} description={t('ruchers.emptyDescription')} />
       ) : (
         <RucherTable
           ruchers={ruchers}

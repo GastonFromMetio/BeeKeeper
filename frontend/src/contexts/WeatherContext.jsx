@@ -66,7 +66,7 @@ export function WeatherProvider({ children }) {
     const { force = false } = options
 
     if (!position) {
-      throw new WeatherApiError('Les coordonnees du rucher sont manquantes.')
+      throw new WeatherApiError('Missing apiary coordinates.', 'weather.missingCoordinates')
     }
 
     const cachedReport = weatherByRucherIdRef.current[rucher.id] ?? null

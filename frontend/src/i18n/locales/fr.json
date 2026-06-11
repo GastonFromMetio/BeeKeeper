@@ -47,6 +47,8 @@
   },
   "weather": {
     "title": "Meteo exterieure",
+    "detailsTitle": "Meteo du rucher",
+    "detailsDescription": "Temperature, vent, humidite et coordonnees du dernier releve.",
     "column": "Météo",
     "temperature": "Température",
     "description": "Derniers relevés récupérés depuis la liste des ruchers.",
@@ -60,6 +62,8 @@
     "forRucher": "Sur {{name}}",
     "apparent": "Ressenti",
     "feelsLike": "Ressenti {{value}}",
+    "wind": "Vent",
+    "humidity": "Humidite",
     "location": "Localisation",
     "coordinates": "Coordonnées",
     "updatedAt": "Consulté le",
@@ -72,9 +76,134 @@
   },
   "rucher": {
     "form": {
+      "name": "Nom",
+      "gpsPosition": "Position GPS",
+      "capacity": "Emplacements",
+      "description": "Description",
       "mapHint": "Clique sur la carte pour enregistrer les coordonnées du rucher."
     },
-    "coordinatesMissing": "Non renseignées"
+    "coordinatesMissing": "Non renseignées",
+    "capacityCount_one": "{{count}} emplacement",
+    "capacityCount_other": "{{count}} emplacements"
+  },
+  "ruchers": {
+    "title": "Ruchers",
+    "description": "Gestion des emplacements.",
+    "new": "Nouveau rucher",
+    "back": "Retour aux ruchers",
+    "loading": "Chargement des ruchers...",
+    "emptyTitle": "Aucun rucher",
+    "emptyDescription": "Créez votre premier rucher.",
+    "confirmDelete": "Supprimer {{name}} ?",
+    "created": "Rucher créé",
+    "updated": "Rucher modifié",
+    "deleted": "Rucher supprimé",
+    "createTitle": "Créer un rucher",
+    "editTitle": "Modifier le rucher",
+    "create": "Créer",
+    "edit": "Modifier",
+    "table": {
+      "name": "Nom",
+      "coordinates": "Coordonnées",
+      "capacity": "Emplacements",
+      "actions": "Actions"
+    }
+  },
+  "ruche": {
+    "form": {
+      "apiary": "Rucher",
+      "chooseApiary": "Choisir un rucher",
+      "name": "Nom",
+      "status": "Statut",
+      "type": "Type de ruche",
+      "queenYear": "Année reine",
+      "notes": "Notes"
+    },
+    "status": {
+      "active": "Active",
+      "en_observation": "Observation",
+      "inactive": "Inactive",
+      "activeFull": "Active",
+      "en_observationFull": "En observation",
+      "inactiveFull": "Inactive"
+    }
+  },
+  "ruches": {
+    "title": "Ruches",
+    "description": "Gestion des colonies.",
+    "new": "Nouvelle ruche",
+    "loading": "Chargement des ruches...",
+    "emptyTitle": "Aucune ruche",
+    "emptyDescription": "Créez votre première ruche.",
+    "confirmDelete": "Supprimer {{name}} ?",
+    "created": "Ruche créée",
+    "updated": "Ruche modifiée",
+    "deleted": "Ruche supprimée",
+    "createTitle": "Créer une ruche",
+    "editTitle": "Modifier la ruche",
+    "create": "Créer",
+    "edit": "Modifier",
+    "forApiary": "Ruches du rucher",
+    "noApiary": "Rucher inconnu",
+    "noneForApiary": "Aucune ruche associée à ce rucher.",
+    "table": {
+      "name": "Nom",
+      "apiary": "Rucher",
+      "status": "Statut",
+      "type": "Type",
+      "queenYear": "Année reine",
+      "actions": "Actions"
+    }
+  },
+  "dashboard": {
+    "loading": "Chargement du tableau de bord...",
+    "kicker": "Pilotage apicole",
+    "title": "Tableau de bord opérationnel",
+    "description": "Suivez la capacité des ruchers, les colonies à surveiller et les derniers relevés météo consultés.",
+    "manageApiaries": "Gérer les ruchers",
+    "addHive": "Ajouter une ruche",
+    "trackedApiaries": "Ruchers suivis",
+    "availableSlots_one": "{{count}} emplacement encore disponible",
+    "availableSlots_other": "{{count}} emplacements encore disponibles",
+    "activeHives": "Ruches actives",
+    "hiveStatusDetail": "{{observation}} en observation, {{inactive}} inactives",
+    "globalOccupancy": "Occupation globale",
+    "occupancyDetail": "{{hives}} ruches pour {{slots}} emplacements",
+    "checkedWeather": "Météo consultée",
+    "noManualWeather": "Aucun relevé manuel",
+    "colonies": "Colonies",
+    "coloniesDescription": "Filtrez les ruches par état pour isoler les actions à mener.",
+    "statusFilter": {
+      "all": "Toutes",
+      "active": "Actives",
+      "en_observation": "Observation",
+      "inactive": "Inactives"
+    },
+    "slotOccupancy": "Occupation des emplacements",
+    "displayedHives_one": "{{count}} ruche affichée",
+    "displayedHives_other": "{{count}} ruches affichées",
+    "selectedApiary": "Rucher sélectionné",
+    "selectedApiaryDescription": "Vue rapide de la capacité, des coordonnées et des colonies.",
+    "usedCapacity": "Capacité utilisée",
+    "apiaryColonies": "Colonies du rucher",
+    "createApiaryPrompt": "Créez un rucher pour alimenter le tableau de bord.",
+    "businessAlerts": "Alertes métier",
+    "businessAlertsDescription": "Détection simple des situations qui demandent un contrôle.",
+    "noAlerts": "Aucune alerte prioritaire avec les données actuelles.",
+    "globalMap": "Carte globale",
+    "globalMapDescription": "Position de tous les ruchers renseignés.",
+    "mapEmpty": "Ajoutez des coordonnées GPS à vos ruchers pour les afficher ici.",
+    "markerLabel": "{{name}} · {{hives}}/{{capacity}} emplacements",
+    "alertFullTitle": "{{name}} est plein",
+    "alertFullDetail": "{{hives}}/{{capacity}} emplacements occupés.",
+    "alertInactiveTitle": "{{name}} inactive",
+    "alertCheckIn": "À vérifier dans {{name}}.",
+    "alertCheck": "À vérifier.",
+    "alertOldQueenTitle": "Reine ancienne sur {{name}}",
+    "alertOldQueenDetail": "Année reine {{year}}. Prévoir un contrôle.",
+    "alertWindTitle": "Vent fort sur {{name}}",
+    "alertTemperatureTitle": "Température à surveiller sur {{name}}",
+    "alertTemperatureDetail": "{{temperature}} relevés."
   },
   "notFound": {
     "title": "Cette page n'existe pas",
@@ -87,6 +216,18 @@
     "description": "Compte, langue et session.",
     "account": "Compte",
     "language": "Langue"
+  },
+  "common": {
+    "actions": "Actions",
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "open": "Ouvrir",
+    "saving": "Enregistrement...",
+    "unknown": "Inconnu"
+  },
+  "map": {
+    "loading": "Chargement de la carte..."
   },
   "errors": {
     "generic": "Une erreur est survenue"

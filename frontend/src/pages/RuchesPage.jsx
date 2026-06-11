@@ -9,9 +9,11 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRuchers } from '@/hooks/useRuchers'
 import { useRuches } from '@/hooks/useRuches'
 import { deleteRuche } from '@/services/ruchesApi'
+import { useTranslation } from 'react-i18next'
 
 export function RuchesPage() {
   const { token } = useAuth()
+  const { t } = useTranslation()
   const [editingRuche, setEditingRuche] = useState(null)
   const [mutationError, setMutationError] = useState(null)
   const ruchersState = useRuchers()
@@ -19,12 +21,12 @@ export function RuchesPage() {
 
   async function handleDelete(ruche) {
     const rucheName = ruche.name ?? ruche.nom
-    if (!window.confirm(`Supprimer ${rucheName} ?`)) return
+    if (!window.confirm(t('ruches.confirmDelete', { name: rucheName }))) return
 
     try {
       setMutationError(null)
       await deleteRuche(token, ruche.id)
-      toast.success('Ruche supprimée')
+      toast.success(t('ruches.deleted'))
       await ruchesState.refetch()
     } catch (apiError) {
       setMutationError(apiError)
@@ -32,21 +34,21 @@ export function RuchesPage() {
   }
 
   if (ruchersState.isLoading || ruchesState.isLoading) {
-    return <LoadingState variant="table" columns={6} label="Chargement des ruches..." />
+    return <LoadingState variant="table" columns={6} label={t('ruches.loading')} />
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Ruches</h1>
-          <p className="text-sm text-muted-foreground">Gestion des colonies.</p>
+          <h1 className="text-2xl font-semibold">{t('ruches.title')}</h1>
+          <p className="text-sm text-muted-foreground">{t('ruches.description')}</p>
         </div>
         <RucheDialog ruchers={ruchersState.ruchers} onSaved={ruchesState.refetch} />
       </div>
       <ApiErrorAlert error={ruchersState.error || ruchesState.error || mutationError} />
       {ruchesState.ruches.length === 0 ? (
-        <EmptyState title="Aucune ruche" description="Créez votre première ruche." />
+        <EmptyState title={t('ruches.emptyTitle')} description={t('ruches.emptyDescription')} />
       ) : (
         <RucheTable
           ruches={ruchesState.ruches}

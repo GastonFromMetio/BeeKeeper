@@ -33,11 +33,11 @@ export function RucherTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nom</TableHead>
-            <TableHead>Coordonnées</TableHead>
+            <TableHead>{t('ruchers.table.name')}</TableHead>
+            <TableHead>{t('ruchers.table.coordinates')}</TableHead>
             <TableHead>{t('weather.column')}</TableHead>
-            <TableHead>Emplacements</TableHead>
-            <TableHead className="w-44 text-right">Actions</TableHead>
+            <TableHead>{t('ruchers.table.capacity')}</TableHead>
+            <TableHead className="w-44 text-right">{t('ruchers.table.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -96,8 +96,8 @@ export function RucherTable({
                     <Link
                       className={buttonVariants({ variant: 'ghost', size: 'icon' })}
                       to={`/ruchers/${rucher.id}`}
-                      aria-label="Voir"
-                      title="Voir"
+                      aria-label={t('common.view')}
+                      title={t('common.view')}
                       >
                         <Eye className="size-4" />
                       </Link>
@@ -105,8 +105,8 @@ export function RucherTable({
                       variant="ghost"
                       size="icon"
                       onClick={() => onEdit(rucher)}
-                      aria-label="Modifier"
-                      title="Modifier"
+                      aria-label={t('common.edit')}
+                      title={t('common.edit')}
                     >
                       <Pencil className="size-4" />
                     </Button>
@@ -114,8 +114,8 @@ export function RucherTable({
                       variant="ghost"
                       size="icon"
                       onClick={() => onDelete(rucher)}
-                      aria-label="Supprimer"
-                      title="Supprimer"
+                      aria-label={t('common.delete')}
+                      title={t('common.delete')}
                     >
                       <Trash2 className="size-4" />
                     </Button>
