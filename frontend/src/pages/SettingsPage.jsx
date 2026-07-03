@@ -9,10 +9,10 @@ export function SettingsPage() {
   const { i18n, t } = useTranslation()
 
   return (
-    <div className="max-w-3xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">{t('settings.title')}</h1>
-        <p className="text-sm text-muted-foreground">{t('settings.description')}</p>
+    <div className="max-w-4xl space-y-8">
+      <div className="rounded-xl border bg-secondary p-6 text-secondary-foreground shadow-md shadow-foreground/8">
+        <h1 className="text-4xl font-bold">{t('settings.title')}</h1>
+        <p className="mt-2 text-lg opacity-80">{t('settings.description')}</p>
       </div>
 
       <Card>

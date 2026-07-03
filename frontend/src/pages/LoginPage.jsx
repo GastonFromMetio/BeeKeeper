@@ -15,16 +15,16 @@ export function LoginPage() {
   }
 
   return (
-    <Card className="mx-auto w-full max-w-xl border border-border/80 bg-card/92 shadow-sm backdrop-blur-sm">
-      <CardHeader className="space-y-2">
-        <CardTitle className="text-3xl">{t('auth.loginTitle')}</CardTitle>
-        <CardDescription className="text-base leading-7">
+    <Card className="mx-auto w-full max-w-2xl border border-border/80 bg-card/92 shadow-lg shadow-foreground/5 backdrop-blur-sm">
+      <CardHeader className="space-y-3 pb-2">
+        <CardTitle className="text-4xl font-bold">{t('auth.loginTitle')}</CardTitle>
+        <CardDescription className="text-lg leading-8">
           {t('auth.loginDescription')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-8">
         <LoginForm />
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           {t('auth.noAccount')}{' '}
           <Link className="font-medium text-primary underline-offset-4 hover:underline" to="/register">
             {t('auth.registerLink')}

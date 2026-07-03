@@ -16,7 +16,7 @@ export function ThemeToggle({ className, showLabels = false }) {
   const { setTheme, theme = 'system' } = useTheme()
 
   return (
-    <div className={cn('flex items-center gap-1 rounded-lg border bg-background p-1', className)}>
+    <div className={cn('flex items-center gap-1 rounded-xl border bg-background p-1', className)}>
       {themeOptions.map((option) => {
         const Icon = option.icon
         const isActive = theme === option.value

@@ -70,18 +70,18 @@ function MetricCard({ icon, title, value, detail, tone = 'default' }) {
   }
 
   return (
-    <Card className="bg-card/95 shadow-sm">
+    <Card className="bg-card/95 shadow-md shadow-foreground/5">
       <CardHeader className="grid-cols-[1fr_auto] items-center gap-3">
         <div>
           <CardDescription>{title}</CardDescription>
-          <CardTitle className="mt-1 text-3xl font-semibold">{value}</CardTitle>
+          <CardTitle className="mt-2 text-4xl font-bold">{value}</CardTitle>
         </div>
-        <div className={cn('flex size-10 items-center justify-center rounded-lg', toneClasses[tone])}>
-          <MetricIcon className="size-5" />
+        <div className={cn('flex size-12 items-center justify-center rounded-2xl', toneClasses[tone])}>
+          <MetricIcon className="size-6" />
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">{detail}</p>
+        <p className="text-base leading-7 text-muted-foreground">{detail}</p>
       </CardContent>
     </Card>
   )
@@ -268,15 +268,15 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div className="space-y-8">
+      <div className="flex flex-col gap-5 rounded-xl border bg-secondary p-6 text-secondary-foreground shadow-md shadow-foreground/8 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-lg border bg-card/80 px-3 py-1 text-sm text-muted-foreground">
-            <Sparkles className="size-4 text-primary" />
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-background/80 px-4 py-2 text-base text-foreground">
+            <Sparkles className="size-5 text-primary" />
             {t('dashboard.kicker')}
           </div>
-          <h1 className="text-3xl font-semibold leading-tight">{t('dashboard.title')}</h1>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          <h1 className="text-4xl font-bold leading-tight md:text-5xl">{t('dashboard.title')}</h1>
+          <p className="mt-3 max-w-2xl text-lg leading-8 opacity-80">
             {t('dashboard.description')}
           </p>
         </div>
@@ -294,7 +294,7 @@ export function DashboardPage() {
 
       <ApiErrorAlert error={ruchersState.error || ruchesState.error} />
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           icon={MapPinned}
           title={t('dashboard.trackedApiaries')}
@@ -330,8 +330,8 @@ export function DashboardPage() {
         />
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)]">
-        <Card className="bg-card/95 shadow-sm">
+      <section className="grid gap-7 xl:grid-cols-[minmax(0,1.08fr)_minmax(24rem,0.92fr)]">
+        <Card className="bg-card/95 shadow-md shadow-foreground/5">
           <CardHeader>
             <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
               <div>
@@ -354,7 +354,7 @@ export function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-3">
               <div className="rounded-lg border bg-emerald-50/70 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/10">
                 <p className="text-sm text-emerald-700 dark:text-emerald-200">{t('dashboard.statusFilter.active')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.activeRuches}</p>
@@ -402,7 +402,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card/95 shadow-sm">
+        <Card className="bg-card/95 shadow-md shadow-foreground/5">
           <CardHeader>
             <CardTitle>{t('dashboard.selectedApiary')}</CardTitle>
             <CardDescription>{t('dashboard.selectedApiaryDescription')}</CardDescription>
@@ -518,8 +518,8 @@ export function DashboardPage() {
         </Card>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <Card className="bg-card/95 shadow-sm">
+      <section className="grid gap-7 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+        <Card className="bg-card/95 shadow-md shadow-foreground/5">
           <CardHeader>
             <CardTitle>{t('dashboard.businessAlerts')}</CardTitle>
             <CardDescription>{t('dashboard.businessAlertsDescription')}</CardDescription>
@@ -553,7 +553,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card/95 shadow-sm">
+        <Card className="bg-card/95 shadow-md shadow-foreground/5">
           <CardHeader>
             <CardTitle>{t('dashboard.globalMap')}</CardTitle>
             <CardDescription>{t('dashboard.globalMapDescription')}</CardDescription>

@@ -29,8 +29,76 @@ export function RucherTable({
   const { t } = useTranslation()
 
   return (
-    <div className="overflow-hidden rounded-lg border">
-      <Table>
+    <>
+      <div className="grid gap-4 md:hidden">
+        {ruchers.map((rucher) => {
+          const position = getRucherPosition(rucher)
+          const weatherReport = weatherReportsByRucherId[rucher.id] ?? null
+
+          return (
+            <article key={rucher.id} className="overflow-hidden rounded-xl border bg-card shadow-md shadow-foreground/8">
+              <div className="h-2 bg-primary" />
+              <div className="p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-xl font-bold">{rucher.name}</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {t('rucher.capacityCount', { count: Number(rucher.nb_emplacements) })}
+                  </p>
+                </div>
+                <Link
+                  className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+                  to={`/ruchers/${rucher.id}`}
+                >
+                  <Eye className="size-4" />
+                  {t('common.view')}
+                </Link>
+              </div>
+
+              <div className="mt-4 grid gap-3 text-base">
+                <p className="flex items-center gap-2 rounded-xl bg-muted/60 p-3 text-muted-foreground">
+                  <MapPin className="size-4" />
+                  {position
+                    ? `${formatCoordinate(position.lat)}, ${formatCoordinate(position.lng)}`
+                    : t('rucher.coordinatesMissing')}
+                </p>
+                <p className="flex items-center gap-2 rounded-xl bg-primary/12 p-3 font-semibold text-primary">
+                  <ThermometerSun className="size-4 text-primary" />
+                  {weatherReport
+                    ? formatTemperature(weatherReport.temperature, weatherReport.temperatureUnit)
+                    : loadingRucherId === rucher.id
+                      ? t('weather.loadingShort')
+                      : t('weather.unavailable')}
+                </p>
+              </div>
+
+              <div className="mt-5 grid grid-cols-3 gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => onWeather?.(rucher)}
+                  disabled={!position || loadingRucherId === rucher.id}
+                >
+                  <CloudSun className="size-4" />
+                  {t('weather.column')}
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => onEdit(rucher)}>
+                  <Pencil className="size-4" />
+                  {t('common.edit')}
+                </Button>
+                <Button variant="destructive" size="sm" onClick={() => onDelete(rucher)}>
+                  <Trash2 className="size-4" />
+                  {t('common.delete')}
+                </Button>
+              </div>
+              </div>
+            </article>
+          )
+        })}
+      </div>
+
+      <div className="hidden overflow-hidden rounded-xl border bg-card shadow-md shadow-foreground/8 md:block">
+        <Table>
         <TableHeader>
           <TableRow>
             <TableHead>{t('ruchers.table.name')}</TableHead>
@@ -125,7 +193,8 @@ export function RucherTable({
             )
           })}
         </TableBody>
-      </Table>
-    </div>
+        </Table>
+      </div>
+    </>
   )
 }

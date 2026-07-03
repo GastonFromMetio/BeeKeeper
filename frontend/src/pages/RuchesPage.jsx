@@ -38,11 +38,11 @@ export function RuchesPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
+    <div className="space-y-8">
+      <div className="flex flex-col gap-4 rounded-xl border bg-secondary p-6 text-secondary-foreground shadow-md shadow-foreground/8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">{t('ruches.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('ruches.description')}</p>
+          <h1 className="text-4xl font-bold">{t('ruches.title')}</h1>
+          <p className="mt-2 text-lg opacity-80">{t('ruches.description')}</p>
         </div>
         <RucheDialog ruchers={ruchersState.ruchers} onSaved={ruchesState.refetch} />
       </div>

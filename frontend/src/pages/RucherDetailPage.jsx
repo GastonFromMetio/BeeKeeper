@@ -91,23 +91,23 @@ export function RucherDetailPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <Link className={buttonVariants({ variant: 'outline' })} to="/ruchers">
         {t('ruchers.back')}
       </Link>
       <ApiErrorAlert error={rucherState.error || ruchesState.error || ruchersState.error || mutationError} />
       {rucherState.rucher && (
         <>
-          <section className="grid gap-4 rounded-lg border p-4 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,28rem)]">
+          <section className="grid gap-6 rounded-3xl border bg-card/70 p-6 shadow-sm lg:grid-cols-[minmax(0,1fr)_minmax(22rem,30rem)]">
           <div>
-            <h1 className="text-2xl font-semibold">{rucherState.rucher.name}</h1>
+            <h1 className="text-4xl font-bold">{rucherState.rucher.name}</h1>
             {rucherPosition && (
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-3 text-base text-muted-foreground">
                 {formatCoordinate(rucherPosition.lat)}, {formatCoordinate(rucherPosition.lng)}
               </p>
             )}
-            {rucherState.rucher.description && <p className="mt-3 text-sm">{rucherState.rucher.description}</p>}
-            <p className="mt-3 text-sm text-muted-foreground">
+            {rucherState.rucher.description && <p className="mt-4 text-lg leading-8">{rucherState.rucher.description}</p>}
+            <p className="mt-4 text-base text-muted-foreground">
               {t('rucher.capacityCount', { count: Number(rucherState.rucher.nb_emplacements) })}
             </p>
           </div>
@@ -133,7 +133,7 @@ export function RucherDetailPage() {
       )}
       <section className="space-y-3">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="text-lg font-medium">{t('ruches.forApiary')}</h2>
+          <h2 className="text-2xl font-bold">{t('ruches.forApiary')}</h2>
           <RucheDialog
             ruchers={ruchersState.ruchers}
             initialValues={{ rucher_id: rucherId }}

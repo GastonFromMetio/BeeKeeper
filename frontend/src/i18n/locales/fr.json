@@ -34,7 +34,10 @@
     "loginLink": "Se connecter",
     "restoringSession": "Restauration de la session...",
     "loginSuccess": "Connexion reussie",
-    "registerSuccess": "Compte cree et session ouverte"
+    "registerSuccess": "Compte cree et session ouverte",
+    "demoApiaries": "ruchers demo",
+    "demoHives": "ruches suivies",
+    "demoLanguages": "langues"
   },
   "session": {
     "badge": "Session protegee",

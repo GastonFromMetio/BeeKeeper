@@ -34,7 +34,10 @@
     "loginLink": "Sign in",
     "restoringSession": "Restoring session...",
     "loginSuccess": "Signed in successfully",
-    "registerSuccess": "Account created and session opened"
+    "registerSuccess": "Account created and session opened",
+    "demoApiaries": "demo apiaries",
+    "demoHives": "tracked hives",
+    "demoLanguages": "languages"
   },
   "session": {
     "badge": "Protected session",
