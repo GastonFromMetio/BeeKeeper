@@ -33,9 +33,9 @@ const statusFilters = [
 ]
 
 const statusStyles = {
-  active: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  en_observation: 'border-amber-200 bg-amber-50 text-amber-700',
-  inactive: 'border-slate-200 bg-slate-50 text-slate-700',
+  active: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/12 dark:text-emerald-200',
+  en_observation: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/12 dark:text-amber-200',
+  inactive: 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-500/30 dark:bg-slate-500/12 dark:text-slate-200',
 }
 
 function formatNumber(value) {
@@ -64,13 +64,13 @@ function MetricCard({ icon, title, value, detail, tone = 'default' }) {
   const MetricIcon = icon
   const toneClasses = {
     default: 'bg-primary/10 text-primary',
-    green: 'bg-emerald-100 text-emerald-700',
-    blue: 'bg-sky-100 text-sky-700',
-    amber: 'bg-amber-100 text-amber-700',
+    green: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200',
+    blue: 'bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-200',
+    amber: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-200',
   }
 
   return (
-    <Card className="bg-white/95 shadow-sm">
+    <Card className="bg-card/95 shadow-sm">
       <CardHeader className="grid-cols-[1fr_auto] items-center gap-3">
         <div>
           <CardDescription>{title}</CardDescription>
@@ -271,7 +271,7 @@ export function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-lg border bg-white/80 px-3 py-1 text-sm text-muted-foreground">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-lg border bg-card/80 px-3 py-1 text-sm text-muted-foreground">
             <Sparkles className="size-4 text-primary" />
             {t('dashboard.kicker')}
           </div>
@@ -331,7 +331,7 @@ export function DashboardPage() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)]">
-        <Card className="bg-white/95 shadow-sm">
+        <Card className="bg-card/95 shadow-sm">
           <CardHeader>
             <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
               <div>
@@ -355,16 +355,16 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="rounded-lg border bg-emerald-50/70 p-3">
-                <p className="text-sm text-emerald-700">{t('dashboard.statusFilter.active')}</p>
+              <div className="rounded-lg border bg-emerald-50/70 p-3 dark:border-emerald-500/20 dark:bg-emerald-500/10">
+                <p className="text-sm text-emerald-700 dark:text-emerald-200">{t('dashboard.statusFilter.active')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.activeRuches}</p>
               </div>
-              <div className="rounded-lg border bg-amber-50/70 p-3">
-                <p className="text-sm text-amber-700">{t('dashboard.statusFilter.en_observation')}</p>
+              <div className="rounded-lg border bg-amber-50/70 p-3 dark:border-amber-500/20 dark:bg-amber-500/10">
+                <p className="text-sm text-amber-700 dark:text-amber-200">{t('dashboard.statusFilter.en_observation')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.observationRuches}</p>
               </div>
-              <div className="rounded-lg border bg-slate-50 p-3">
-                <p className="text-sm text-slate-700">{t('dashboard.statusFilter.inactive')}</p>
+              <div className="rounded-lg border bg-slate-50 p-3 dark:border-slate-500/20 dark:bg-slate-500/10">
+                <p className="text-sm text-slate-700 dark:text-slate-200">{t('dashboard.statusFilter.inactive')}</p>
                 <p className="mt-1 text-2xl font-semibold">{dashboard.inactiveRuches}</p>
               </div>
             </div>
@@ -402,7 +402,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white/95 shadow-sm">
+        <Card className="bg-card/95 shadow-sm">
           <CardHeader>
             <CardTitle>{t('dashboard.selectedApiary')}</CardTitle>
             <CardDescription>{t('dashboard.selectedApiaryDescription')}</CardDescription>
@@ -434,7 +434,7 @@ export function DashboardPage() {
                           : t('rucher.coordinatesMissing')}
                       </p>
                       {selectedWeatherReport ? (
-                        <p className="mt-2 inline-flex items-center gap-2 rounded-lg bg-sky-50 px-2.5 py-1 text-sm font-medium text-sky-700">
+                        <p className="mt-2 inline-flex items-center gap-2 rounded-lg bg-sky-50 px-2.5 py-1 text-sm font-medium text-sky-700 dark:bg-sky-500/12 dark:text-sky-200">
                           <CloudSun className="size-4" />
                           {formatTemperature(
                             selectedWeatherReport.temperature,
@@ -475,15 +475,15 @@ export function DashboardPage() {
                   </div>
 
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
-                    <div className="rounded-lg bg-emerald-50 p-2 text-emerald-700">
+                    <div className="rounded-lg bg-emerald-50 p-2 text-emerald-700 dark:bg-emerald-500/12 dark:text-emerald-200">
                       <p className="font-semibold">{selectedRucher.activeCount}</p>
                       <p className="text-xs">{t('dashboard.statusFilter.active')}</p>
                     </div>
-                    <div className="rounded-lg bg-amber-50 p-2 text-amber-700">
+                    <div className="rounded-lg bg-amber-50 p-2 text-amber-700 dark:bg-amber-500/12 dark:text-amber-200">
                       <p className="font-semibold">{selectedRucher.observationCount}</p>
                       <p className="text-xs">{t('dashboard.statusFilter.en_observation')}</p>
                     </div>
-                    <div className="rounded-lg bg-slate-50 p-2 text-slate-700">
+                    <div className="rounded-lg bg-slate-50 p-2 text-slate-700 dark:bg-slate-500/12 dark:text-slate-200">
                       <p className="font-semibold">{selectedRucher.inactiveCount}</p>
                       <p className="text-xs">{t('dashboard.statusFilter.inactive')}</p>
                     </div>
@@ -519,7 +519,7 @@ export function DashboardPage() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <Card className="bg-white/95 shadow-sm">
+        <Card className="bg-card/95 shadow-sm">
           <CardHeader>
             <CardTitle>{t('dashboard.businessAlerts')}</CardTitle>
             <CardDescription>{t('dashboard.businessAlertsDescription')}</CardDescription>
@@ -531,9 +531,9 @@ export function DashboardPage() {
                   key={alert.id}
                   className={cn(
                     'rounded-lg border p-3',
-                    alert.tone === 'amber' && 'border-amber-200 bg-amber-50 text-amber-800',
-                    alert.tone === 'slate' && 'border-slate-200 bg-slate-50 text-slate-800',
-                    alert.tone === 'sky' && 'border-sky-200 bg-sky-50 text-sky-800',
+                    alert.tone === 'amber' && 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/12 dark:text-amber-100',
+                    alert.tone === 'slate' && 'border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-500/30 dark:bg-slate-500/12 dark:text-slate-100',
+                    alert.tone === 'sky' && 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-500/30 dark:bg-sky-500/12 dark:text-sky-100',
                   )}
                 >
                   <div className="flex items-start gap-3">
@@ -553,7 +553,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white/95 shadow-sm">
+        <Card className="bg-card/95 shadow-sm">
           <CardHeader>
             <CardTitle>{t('dashboard.globalMap')}</CardTitle>
             <CardDescription>{t('dashboard.globalMapDescription')}</CardDescription>

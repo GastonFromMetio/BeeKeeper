@@ -41,6 +41,40 @@
   --sidebar-ring: oklch(0.63 0.16 74);
 }
 
+.dark {
+  --background: oklch(0.18 0.018 82);
+  --foreground: oklch(0.94 0.012 95);
+  --card: oklch(0.23 0.018 82);
+  --card-foreground: oklch(0.94 0.012 95);
+  --popover: oklch(0.22 0.018 82);
+  --popover-foreground: oklch(0.94 0.012 95);
+  --primary: oklch(0.72 0.14 76);
+  --primary-foreground: oklch(0.18 0.018 82);
+  --secondary: oklch(0.28 0.018 82);
+  --secondary-foreground: oklch(0.94 0.012 95);
+  --muted: oklch(0.28 0.014 82);
+  --muted-foreground: oklch(0.74 0.018 95);
+  --accent: oklch(0.34 0.04 88);
+  --accent-foreground: oklch(0.96 0.012 95);
+  --destructive: oklch(0.7 0.18 25);
+  --border: oklch(0.34 0.014 82);
+  --input: oklch(0.34 0.014 82);
+  --ring: oklch(0.72 0.14 76);
+  --chart-1: oklch(0.72 0.14 76);
+  --chart-2: oklch(0.72 0.13 145);
+  --chart-3: oklch(0.68 0.13 220);
+  --chart-4: oklch(0.78 0.11 58);
+  --chart-5: oklch(0.72 0.15 18);
+  --sidebar: oklch(0.2 0.016 82);
+  --sidebar-foreground: oklch(0.94 0.012 95);
+  --sidebar-primary: oklch(0.72 0.14 76);
+  --sidebar-primary-foreground: oklch(0.18 0.018 82);
+  --sidebar-accent: oklch(0.34 0.04 88);
+  --sidebar-accent-foreground: oklch(0.96 0.012 95);
+  --sidebar-border: oklch(0.34 0.014 82);
+  --sidebar-ring: oklch(0.72 0.14 76);
+}
+
 @theme inline {
   --font-sans: "Geist Variable", sans-serif;
   --font-heading: "Geist Variable", sans-serif;
@@ -90,13 +124,17 @@
     color-scheme: light;
   }
 
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
     font-family: var(--font-sans);
     letter-spacing: 0;
     background-image:
-      linear-gradient(180deg, color-mix(in oklch, var(--accent) 22%, white) 0%, transparent 22rem),
-      linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.96));
+      linear-gradient(180deg, color-mix(in oklch, var(--accent) 28%, var(--background)) 0%, transparent 22rem),
+      linear-gradient(135deg, color-mix(in oklch, var(--background) 92%, var(--card)), var(--background));
   }
 
   button,

@@ -1,6 +1,7 @@
 import { Languages } from 'lucide-react'
 import { Outlet } from 'react-router'
 
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 
@@ -20,22 +21,25 @@ export function AuthLayout() {
               {t('auth.layoutHint')}
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-full border border-border/70 bg-white/85 p-1 shadow-sm backdrop-blur-sm">
-            <Languages className="ml-2 size-4 text-muted-foreground" />
-            <Button
-              size="sm"
-              variant={i18n.language.startsWith('fr') ? 'default' : 'ghost'}
-              onClick={() => i18n.changeLanguage('fr')}
-            >
-              FR
-            </Button>
-            <Button
-              size="sm"
-              variant={i18n.language.startsWith('en') ? 'default' : 'ghost'}
-              onClick={() => i18n.changeLanguage('en')}
-            >
-              EN
-            </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle className="rounded-full bg-card/85 shadow-sm backdrop-blur-sm" />
+            <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/85 p-1 shadow-sm backdrop-blur-sm">
+              <Languages className="ml-2 size-4 text-muted-foreground" />
+              <Button
+                size="sm"
+                variant={i18n.language.startsWith('fr') ? 'default' : 'ghost'}
+                onClick={() => i18n.changeLanguage('fr')}
+              >
+                FR
+              </Button>
+              <Button
+                size="sm"
+                variant={i18n.language.startsWith('en') ? 'default' : 'ghost'}
+                onClick={() => i18n.changeLanguage('en')}
+              >
+                EN
+              </Button>
+            </div>
           </div>
         </header>
 

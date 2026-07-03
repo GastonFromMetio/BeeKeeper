@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router'
 
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
@@ -121,7 +122,10 @@ export function AppLayout() {
               <p className="hidden text-xs text-muted-foreground sm:block">{t('app.subtitle')}</p>
             </div>
           </div>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageSwitcher />
+          </div>
         </header>
 
         <main className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8">

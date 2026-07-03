@@ -14,7 +14,7 @@ export function RegisterPage() {
   }
 
   return (
-    <Card className="mx-auto w-full max-w-xl border border-border/80 bg-white/92 shadow-sm backdrop-blur-sm">
+    <Card className="mx-auto w-full max-w-xl border border-border/80 bg-card/92 shadow-sm backdrop-blur-sm">
       <CardHeader className="space-y-2">
         <CardTitle className="text-3xl">{t('auth.registerTitle')}</CardTitle>
         <CardDescription className="text-base leading-7">

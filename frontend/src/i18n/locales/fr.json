@@ -215,7 +215,13 @@
     "title": "Parametres",
     "description": "Compte, langue et session.",
     "account": "Compte",
-    "language": "Langue"
+    "language": "Langue",
+    "theme": "Theme d'affichage"
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Systeme"
   },
   "common": {
     "actions": "Actions",

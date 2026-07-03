@@ -215,7 +215,13 @@
     "title": "Settings",
     "description": "Account, language, and session.",
     "account": "Account",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Display theme"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   },
   "common": {
     "actions": "Actions",

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 
@@ -35,6 +36,15 @@ export function SettingsPage() {
           <Button variant={i18n.language.startsWith('en') ? 'default' : 'outline'} onClick={() => i18n.changeLanguage('en')}>
             EN
           </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('settings.theme')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ThemeToggle showLabels />
         </CardContent>
       </Card>
 

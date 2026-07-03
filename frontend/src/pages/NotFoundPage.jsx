@@ -11,7 +11,7 @@ export function NotFoundPage() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl items-center justify-center px-4 py-10 sm:px-6">
-      <section className="w-full rounded-2xl border border-border/70 bg-white/92 p-8 text-center shadow-sm backdrop-blur-sm sm:p-10">
+      <section className="w-full rounded-2xl border border-border/70 bg-card/92 p-8 text-center shadow-sm backdrop-blur-sm sm:p-10">
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/12 text-primary">
           <Compass className="size-6" />
         </div>

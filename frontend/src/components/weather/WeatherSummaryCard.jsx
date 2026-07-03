@@ -43,7 +43,7 @@ export function WeatherSummaryCard({ reports, isFetching = false }) {
   const recentReports = reports.slice(0, 3)
 
   return (
-    <Card className="border border-border/80 bg-white/92 shadow-sm">
+    <Card className="border border-border/80 bg-card/92 shadow-sm">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
